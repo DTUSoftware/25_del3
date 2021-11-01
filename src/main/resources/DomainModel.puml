@@ -1,0 +1,30 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Game {
+}
+
+class Die {
+    faceValue
+}
+
+class Player {
+    name
+
+}
+class Fields{
+    number
+    name
+    money
+    extraTurn
+}
+
+class Account{
+ money
+}
+
+Game "1" -r "2" Player : Includes
+Game "1" -l "2" Die : Includes
+Game "1" -- "12" Fields : Includes
+Player  "1" -d- "1" Account: Includes
+@enduml

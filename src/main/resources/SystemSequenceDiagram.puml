@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+actor Player
+Player -[hidden]-> GUI
+GUI -[hidden]-> Game
+
+Game -> Game : main()
+
+GUI <- Game : initializeGUI()
+GUI --> Game : gui
+Player -> GUI : interacts
+
+loop for each player (2x)
+    GUI <- Game : askPlayerName()
+    GUI --> Game : playerName
+    Game -> Game : createPlayer(playerName)
+end
+
+loop players want to keep playing
+    GUI <- Game : newGame()
+    loop no player won
+        loop for each player (2x)
+            GUI <- Game : askRollDice()
+            GUI -> Game : rollDice()
+            GUI <-- Game : diceValues, playerWon
+            GUI -> GUI : updateDice(diceValues)
+        end
+    end
+    GUI <- Game : askPlayAgain()
+    GUI --> Game : playersWantToKeepPlaying
+end
+
+@enduml

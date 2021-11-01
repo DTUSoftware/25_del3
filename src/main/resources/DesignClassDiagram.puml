@@ -1,0 +1,83 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+
+class Game {
+
+}
+
+package diplomitdtu.matadorgui {}
+
+' Managers
+package managers {
+    class PlayerManager {
+        -players : Player[]
+    }
+
+    class GameManager {
+
+    }
+
+    class LanguageManager {
+        +getMessage(messageString) : String
+    }
+
+    class GUIManager {
+
+    }
+
+    GUIManager ..> diplomitdtu.matadorgui : <<use>>
+}
+
+Game --> "1" GameManager
+Game --> "1" PlayerManager
+Game --> "1" GUIManager
+Game --> "1" LanguageManager
+
+
+' Objects
+package objects {
+    class Player {
+        -name : String
+        -account : Account
+    }
+
+    class Account {
+        -balance : int
+    }
+
+    class GameBoard {
+
+    }
+
+    class DiceCup {
+        -dice : Die[]
+
+        +raffle()
+        +getValues() : int[]
+        +getSum() : int
+    }
+
+    class Die {
+        -value : int
+
+        +roll()
+    }
+
+    package fields {
+        class Field {
+
+        }
+    }
+
+    DiceCup --> "2" Die
+    Player --> "1" Account
+    GameBoard ..> fields : <<use>>
+}
+
+PlayerManager --> "2" Player
+GameManager --> "1" GameBoard
+GameManager --> "1" DiceCup
+
+@enduml
