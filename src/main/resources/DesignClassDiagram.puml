@@ -18,6 +18,19 @@ package managers {
     class PlayerManager {
     }
 
+    class DeedManager {
+        -deeds : BiMap<deedID:UUID, fieldID:UUID> [16]
+        -deedOwnership : HashMap<deedID:UUID, playerID:UUID> [16]
+        -deedGroups : HashMap<color:Color, deeds:Deed[2]> [8]
+
+        +getPlayerDeeds(playerID:UUID) : Deed[]
+        +getDeed(fieldID:UUID) : UUID
+        +getField(deedID:UUID) : UUID
+        +getDeedGroupDeeds(color:Color) : Deed[2]
+        +createDeed(fieldID:UUID) : void
+        +setDeedOwner(deedID:UUID, playerID:UUID) : void
+    }
+
     class LanguageManager {
         {static} -languageManager : LanguageManager
 
@@ -36,6 +49,7 @@ package managers {
 Game --> "1 -gameManager" GameManager
 Game --> "1 -playerManager" PlayerManager
 Game --> "1 -guiManager" GUIManager
+Game --> "1 -deedManager" DeedManager
 
 
 ' Objects
@@ -82,13 +96,12 @@ package objects {
             {abstract} +doLandingAction(:Player) : void
         }
 
-        class PropertyFieldGroup {
-        }
-
         class StartField {
         }
 
         class PropertyField {
+            -color : Color
+            
             +isAvailable() : boolean
         }
 
@@ -110,15 +123,11 @@ package objects {
         Field <|-- JailField
         Field <|-- BreakField
         Field <|-- GoToJailField
-
-        PropertyField "2 -propertyFields" <--> "1 -propertyGroup" PropertyFieldGroup
     }
 
     GameBoard --> "24 -fields" Field
     DiceCup --> "2 -dice" Die
     Player --> "1 -account" Account
-    Player "1 -deedOwner" <--> "~* -deeds" Deed
-    Deed "1 -deed" <--> "1 -property" PropertyField
 }
 
 PlayerManager --> "2..4 -players" Player
