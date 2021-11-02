@@ -10,21 +10,25 @@ class Die {
 
 class Player {
     name
-
 }
-class Fields{
-    number
+
+class Fields {
     name
-    money
-    extraTurn
+    price
+    rent
 }
 
-class Account{
- money
+class FieldGroup {
+    groupRent
 }
 
-Game "1" -r "2" Player : Includes
+class Account {
+    balance
+}
+
+Game "1" -r "2..4" Player : Includes
 Game "1" -l "2" Die : Includes
-Game "1" -- "12" Fields : Includes
+Game "1" -- "24" Fields : Includes
+Fields "2" -- "1" FieldGroup : Includes
 Player  "1" -d- "1" Account: Includes
 @enduml
