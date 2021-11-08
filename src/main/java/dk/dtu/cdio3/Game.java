@@ -12,7 +12,7 @@ import java.util.Scanner;
  * Main class for the program
  */
 public class Game {
-    private final static int startingBalance = 1000;
+    private final static double startingBalance = 12000.0;
     public final static boolean debug = ((System.getenv("debug") != null) || (System.getProperty("debug") != null));
 
     public static void main(String[] args) {

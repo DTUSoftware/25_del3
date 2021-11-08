@@ -15,7 +15,7 @@ public class Player {
         this.account = new Account();
     }
 
-    public Player(String name, int startingBalance) {
+    public Player(String name, double startingBalance) {
         this.name = name;
         this.playerID = UUID.randomUUID();
         this.account = new Account(startingBalance);

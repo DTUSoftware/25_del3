@@ -74,17 +74,10 @@ public class GameManager {
         GUIManager.getInstance().updateDice(diceValues[0], diceValues[1]);
 
         // Positions
-        int oldPlayerPosition = playerPositions.get(playerID);
-
-        int newPlayerPosition = oldPlayerPosition+diceCup.getSum();
-        if (newPlayerPosition >= gameBoard.getFieldAmount()) {
-            newPlayerPosition = Math.abs(newPlayerPosition-gameBoard.getFieldAmount());
-        }
-
-        playerPositions.put(playerID, newPlayerPosition);
+        playerPositions.put(playerID, playerPositions.get(playerID)+diceCup.getSum());
         // TODO: passing start check
 
-        Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID));
+        Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());
         field.doLandingAction(playerID);
     }
 }

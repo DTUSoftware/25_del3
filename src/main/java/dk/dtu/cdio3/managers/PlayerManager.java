@@ -33,7 +33,7 @@ public class PlayerManager {
         return player;
     }
 
-    public Player createPlayer(String name, int startingBalance) {
+    public Player createPlayer(String name, double startingBalance) {
         Player player = new Player(name, startingBalance);
         UUID playerID = player.getID();
         players.put(playerID, player);
