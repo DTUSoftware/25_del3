@@ -29,13 +29,21 @@ public class Player {
         return name;
     }
 
-    public boolean withdrawMoney(double m) {
-        boolean success = account.withdraw(m);
+    public boolean withdraw(double amount) {
+        boolean success = account.withdraw(amount);
         // update the GUI
         if (guiInitialized()) {
             GUIManager.getInstance().setPlayerBalance(playerID, getBalance());
         }
         return success;
+    }
+
+    public void deposit(double amount) {
+        account.deposit(amount);
+        // update the GUI
+        if (guiInitialized()) {
+            GUIManager.getInstance().setPlayerBalance(playerID, getBalance());
+        }
     }
 
     public void setBalance(double balance) {

@@ -1,6 +1,7 @@
 package dk.dtu.cdio3.objects;
 
 import com.google.common.io.Resources;
+import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.DeedManager;
 import dk.dtu.cdio3.objects.fields.*;
 import gui_fields.GUI_Field;
@@ -70,6 +71,7 @@ public class GameBoard {
             switch (fieldType) {
                 case "StartField":
                     fields[i] = new StartField();
+                    Game.setStartPassReward(jsonField.getDouble("pass_reward"));
                     break;
                 case "PropertyField":
                     String fieldColorString = jsonField.getString("field_color");

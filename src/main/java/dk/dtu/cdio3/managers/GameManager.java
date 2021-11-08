@@ -74,7 +74,14 @@ public class GameManager {
         GUIManager.getInstance().updateDice(diceValues[0], diceValues[1]);
 
         // Positions
-        playerPositions.put(playerID, playerPositions.get(playerID)+diceCup.getSum());
+        int oldPlayerPosition = playerPositions.get(playerID);
+        int newPlayerPosition = oldPlayerPosition+diceCup.getSum();
+        playerPositions.put(playerID, newPlayerPosition);
+        // Check for passing start
+        if (((int) (oldPlayerPosition/gameBoard.getFieldAmount())) < ((int) (newPlayerPosition/gameBoard.getFieldAmount()))) {
+            // passed start
+            PlayerManager.getInstance().getPlayer(playerID).deposit(Game.getStartPassReward());
+        }
         // TODO: passing start check
 
         Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());

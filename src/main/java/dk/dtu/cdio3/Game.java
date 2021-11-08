@@ -11,6 +11,7 @@ import dk.dtu.cdio3.objects.Player;
  */
 public class Game {
     private final static double startingBalance = 12000.0;
+    private static double startPassReward = 3000.0;
     public final static boolean debug = ((System.getenv("debug") != null) || (System.getProperty("debug") != null));
 
     public static void main(String[] args) {
@@ -44,5 +45,13 @@ public class Game {
 
         // Play the game
         GameManager.getInstance().play();
+    }
+
+    public static void setStartPassReward(double startPassReward) {
+        Game.startPassReward = startPassReward;
+    }
+
+    public static double getStartPassReward() {
+        return startPassReward;
     }
 }
