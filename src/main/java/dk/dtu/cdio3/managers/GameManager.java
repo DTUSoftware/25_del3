@@ -1,12 +1,11 @@
 package dk.dtu.cdio3.managers;
 
+import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.objects.DiceCup;
 import dk.dtu.cdio3.objects.GameBoard;
+import dk.dtu.cdio3.objects.fields.Field;
 
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.UUID;
+import java.util.*;
 
 public class GameManager {
     private static GameManager gameManager;
@@ -14,6 +13,7 @@ public class GameManager {
     private static DiceCup diceCup;
 
     private Deque<UUID> playerQueue;
+    private HashMap<UUID, Integer> playerPositions;
     private boolean gameFinished = false;
 
     private GameManager() {
@@ -40,6 +40,11 @@ public class GameManager {
     public void setupGame(UUID[] playerIDs) {
         playerQueue = new ArrayDeque<>();
         playerQueue.addAll(Arrays.asList(playerIDs));
+
+        playerPositions = new HashMap<>();
+        for (UUID playerID : playerIDs) {
+            playerPositions.put(playerID, 0);
+        }
     }
 
     public void play() {
@@ -60,6 +65,26 @@ public class GameManager {
     }
 
     private void playerPlay(UUID playerID) {
+        if (!Game.debug) {
+            GUIManager.getInstance().waitUserRoll(PlayerManager.getInstance().getPlayer(playerID).getName());
+        }
+        diceCup.raffle();
 
+        int[] diceValues = diceCup.getValues();
+        GUIManager.getInstance().updateDice(diceValues[0], diceValues[1]);
+
+        // Positions
+        int oldPlayerPosition = playerPositions.get(playerID);
+
+        int newPlayerPosition = oldPlayerPosition+diceCup.getSum();
+        if (newPlayerPosition >= gameBoard.getFieldAmount()) {
+            newPlayerPosition = Math.abs(newPlayerPosition-gameBoard.getFieldAmount());
+        }
+
+        playerPositions.put(playerID, newPlayerPosition);
+        // TODO: passing start check
+
+        Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID));
+        field.doLandingAction(playerID);
     }
 }

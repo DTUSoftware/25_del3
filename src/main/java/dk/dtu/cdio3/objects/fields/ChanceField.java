@@ -1,16 +1,16 @@
 package dk.dtu.cdio3.objects.fields;
 
-import dk.dtu.cdio3.objects.Player;
-
 import java.awt.*;
+import java.util.UUID;
 
 public class ChanceField extends Field {
     public ChanceField() {
-        super(Color.ORANGE, "chance");
+        super(Color.ORANGE, "chance", true);
+        super.getGUIStreet().setBorder(Color.MAGENTA);
     }
 
     @Override
-    public void doLandingAction(Player player) {
+    public void doLandingAction(UUID playerID) {
 
     }
 

@@ -1,16 +1,16 @@
 package dk.dtu.cdio3.objects.fields;
 
-import dk.dtu.cdio3.objects.Player;
-
 import java.awt.*;
+import java.util.UUID;
 
 public class BreakField extends Field {
     public BreakField() {
-        super(Color.RED, "break");
+        super(Color.RED, "break", true);
+        super.getGUIStreet().setBorder(Color.BLACK);
     }
 
     @Override
-    public void doLandingAction(Player player) {
+    public void doLandingAction(UUID playerID) {
 
     }
 

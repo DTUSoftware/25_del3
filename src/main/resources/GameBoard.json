@@ -1,7 +1,50 @@
 {
+  "property_field_groups": {
+    "#9a5013": {
+      "base_price": 150,
+      "base_rent": 100,
+      "group_rent": 200
+    },
+    "CYAN": {
+      "base_price": 250,
+      "base_rent": 150,
+      "group_rent": 225
+    },
+    "PINK": {
+      "base_price": 300,
+      "base_rent": 200,
+      "group_rent": 300
+    },
+    "ORANGE": {
+      "base_price": 600,
+      "base_rent": 500,
+      "group_rent": 700
+    },
+    "RED": {
+      "base_price": 1000,
+      "base_rent": 700,
+      "group_rent": 900
+    },
+    "YELLOW": {
+      "base_price": 1800,
+      "base_rent": 1000,
+      "group_rent": 1500
+    },
+    "GREEN": {
+      "base_price": 2000,
+      "base_rent": 1000,
+      "group_rent": 2000
+    },
+    "BLUE": {
+      "base_price": 3000,
+      "base_rent": 2000,
+      "group_rent": 3000
+    }
+  },
   "fields": [
     {
-      "field_type": "StartField"
+      "field_type": "StartField",
+      "pass_reward": 1000
     },
     {
       "field_type": "PropertyField",

@@ -4,6 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import dk.dtu.cdio3.objects.Deed;
+import dk.dtu.cdio3.objects.fields.PropertyField;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,17 +12,35 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public class DeedManager {
+    private static DeedManager deedManager;
+
     private HashMap<UUID, Deed> deedMap = new HashMap<>();
     private BiMap<UUID, UUID> deeds = HashBiMap.create();
     private HashMap<UUID, UUID> deedOwnership = new HashMap<>();
     private HashMap<Color, UUID[]> deedGroups = new HashMap<>();
 
-    public void createDeed(UUID fieldID) {
+    private DeedManager() {
+
+    }
+
+    public static DeedManager getInstance() {
+        if (deedManager == null) {
+            deedManager = new DeedManager();
+        }
+
+        return deedManager;
+    }
+
+    public Deed createDeed(UUID fieldID, double price, double rent, double groupRent) {
         Deed deed = new Deed();
+        deed.setPrices(price, rent, groupRent);
+
         UUID deedID = deed.getID();
         deedMap.put(deedID, deed);
         deeds.put(deedID, fieldID);
         deedOwnership.put(deedID, null);
+
+        return deed;
     }
 
     public Deed getDeed(UUID deedID) {
@@ -54,12 +73,28 @@ public class DeedManager {
         return deeds.get(deedID);
     }
 
-    public void createDeedGroup(Color groupColor, UUID deed1, UUID deed2) {
-        UUID[] deeds = new UUID[]{deed1, deed2};
+    public void createDeedGroup(Color groupColor, UUID[] deeds) {
         deedGroups.put(groupColor, deeds);
     }
 
     public UUID[] getDeedGroupDeeds(Color groupColor) {
         return deedGroups.get(groupColor);
+    }
+
+    public void setDeedOwnership(UUID deedID, UUID playerID) {
+        deedOwnership.put(deedID, playerID);
+        PropertyField deedField = (PropertyField) GameManager.getInstance().getGameBoard().getFieldFromID(getFieldID(deedID));
+        deedField.setPropertyOwner(playerID);
+    }
+
+    public UUID getDeedOwnership(UUID deedID) {
+        return deedOwnership.get(deedID);
+    }
+
+    public void updateDeedPrices(UUID deedID, double price, double rent, double groupRent) {
+        Deed deed = getDeed(deedID);
+        deed.setPrices(price, rent, groupRent);
+        PropertyField deedField = (PropertyField) GameManager.getInstance().getGameBoard().getFieldFromID(getFieldID(deedID));
+        deedField.updatePrices(deedID);
     }
 }

@@ -12,17 +12,20 @@ public abstract class Field {
     private Color fieldColor;
     private GUI_Street guiStreet;
 
-    Field(Color fieldColor, String fieldName) {
+    Field(Color fieldColor, String fieldName, boolean description) {
         fieldID = UUID.randomUUID();
         this.fieldColor = fieldColor;
 
         this.guiStreet = new GUI_Street();
         this.guiStreet.setBackGroundColor(fieldColor);
         this.guiStreet.setTitle(LanguageManager.getInstance().getString("field_"+fieldName+"_name"));
-        this.guiStreet.setSubText(LanguageManager.getInstance().getString("field_"+fieldName+"_sub_text"));
+        this.guiStreet.setSubText("");
+        if (description) {
+            this.guiStreet.setDescription(LanguageManager.getInstance().getString("field_"+fieldName+"_description"));
+        }
     }
 
-    public abstract void doLandingAction(Player player);
+    public abstract void doLandingAction(UUID playerID);
 
     public abstract void reloadLanguage();
 
@@ -32,5 +35,9 @@ public abstract class Field {
 
     public GUI_Street getGUIStreet() {
         return this.guiStreet;
+    }
+
+    public Color getFieldColor() {
+        return fieldColor;
     }
 }

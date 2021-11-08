@@ -1,7 +1,7 @@
 package dk.dtu.cdio3.objects;
 
 import com.google.common.io.Resources;
-import dk.dtu.cdio3.Game;
+import dk.dtu.cdio3.managers.DeedManager;
 import dk.dtu.cdio3.objects.fields.*;
 import gui_fields.GUI_Field;
 import org.json.JSONArray;
@@ -10,12 +10,14 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.UUID;
 
 public class GameBoard {
     private final Field[] fields;
+    private HashMap<UUID, Field> fieldMap = new HashMap<>();
     private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
     private JSONObject gameBoardJSON;
 
@@ -32,12 +34,35 @@ public class GameBoard {
         }
     }
 
+    private Color getColor(String colorString) {
+        Color color = Color.BLACK;
+        if (colorString.startsWith("#")) {
+            color = Color.decode(colorString);
+        }
+        else {
+            try {
+                color = (Color) Color.class.getField(colorString).get(null);
+            }
+            catch (Exception e) {
+                System.out.println(e.toString());
+            }
+        }
+        return color;
+    }
+
     public GameBoard() {
         loadGameBoardConfig();
 
         JSONArray jsonFields = gameBoardJSON.getJSONArray("fields");
         fields = new Field[jsonFields.length()];
+        JSONObject jsonFieldGroups = gameBoardJSON.getJSONObject("property_field_groups");
+        HashMap<Color, ArrayList<UUID>> fieldGroupsMap = new HashMap<>();
+        // populate map
+        for (String colorString : jsonFieldGroups.keySet()) {
+            fieldGroupsMap.put(getColor(colorString), new ArrayList<>());
+        }
 
+        // Load fields from Game Board config
         for (int i = 0; i < jsonFields.length(); i++) {
             JSONObject jsonField = jsonFields.getJSONObject(i);
             String fieldType = jsonField.getString("field_type");
@@ -48,19 +73,19 @@ public class GameBoard {
                     break;
                 case "PropertyField":
                     String fieldColorString = jsonField.getString("field_color");
-                    Color fieldColor = Color.BLACK;
-                    if (fieldColorString.startsWith("#")) {
-                        fieldColor = Color.decode(fieldColorString);
-                    }
-                    else {
-                        try {
-                            fieldColor = (Color) Color.class.getField(fieldColorString).get(null);
-                        }
-                        catch (Exception e) {
-                            System.out.println(e.toString());
-                        }
-                    }
+                    Color fieldColor = getColor(fieldColorString);
                     fields[i] = new PropertyField(fieldColor, jsonField.getString("field_name"));
+
+                    // Register the rent
+                    JSONObject groupRentJSON = jsonFieldGroups.getJSONObject(fieldColorString);
+                    double price = groupRentJSON.getDouble("base_price");
+                    double rent = groupRentJSON.getDouble("base_rent");
+                    double groupRent = groupRentJSON.getDouble("group_rent");
+                    Deed fieldDeed = DeedManager.getInstance().createDeed(fields[i].getID(), price, rent, groupRent);
+                    ((PropertyField) fields[i]).updatePrices(fieldDeed.getID());
+
+                    // Add the field deed to the group array
+                    fieldGroupsMap.get(fieldColor).add(fieldDeed.getID());
                     break;
                 case "ChanceField":
                     fields[i] = new ChanceField();
@@ -80,7 +105,13 @@ public class GameBoard {
             }
 
             Field field = fields[i];
+            fieldMap.put(field.getID(), fields[i]);
             guiFields.put(field.getID(), field.getGUIStreet());
+        }
+
+        // Update the deedmanager with group deeds
+        for (Color groupColor : fieldGroupsMap.keySet()) {
+            DeedManager.getInstance().createDeedGroup(groupColor, fieldGroupsMap.get(groupColor).toArray(new UUID[0]));
         }
     }
 
@@ -93,8 +124,16 @@ public class GameBoard {
         }
     }
 
+    public int getFieldAmount() {
+        return fields.length;
+    }
+
     public Field getField(int fieldPosition) {
         return fields[fieldPosition];
+    }
+
+    public Field getFieldFromID(UUID fieldID) {
+        return fieldMap.get(fieldID);
     }
 
     public GUI_Field[] getGUIFields() {

@@ -1,16 +1,16 @@
 package dk.dtu.cdio3.objects.fields;
 
-import dk.dtu.cdio3.objects.Player;
-
 import java.awt.*;
+import java.util.UUID;
 
 public class StartField extends Field {
     public StartField() {
-        super(Color.WHITE, "start");
+        super(Color.WHITE, "start", true);
+        super.getGUIStreet().setBorder(Color.BLACK);
     }
 
     @Override
-    public void doLandingAction(Player player) {
+    public void doLandingAction(UUID playerID) {
 
     }
 

@@ -1,16 +1,16 @@
 package dk.dtu.cdio3.objects.fields;
 
-import dk.dtu.cdio3.objects.Player;
-
 import java.awt.*;
+import java.util.UUID;
 
 public class JailField extends Field {
     public JailField() {
-        super(Color.ORANGE, "jail");
+        super(Color.ORANGE, "jail", true);
+        super.getGUIStreet().setBorder(Color.BLACK);
     }
 
     @Override
-    public void doLandingAction(Player player) {
+    public void doLandingAction(UUID playerID) {
 
     }
 
