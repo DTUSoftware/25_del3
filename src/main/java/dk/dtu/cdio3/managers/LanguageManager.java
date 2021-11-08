@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 
 /**
  * Class language manager with handles whether you want the language in Danish or English.
- *
+ * <p>
  * Note: originally made in cdio2, though improved
  */
 public class LanguageManager {
@@ -23,11 +23,9 @@ public class LanguageManager {
     private LanguageManager() {
         if (locale.getLanguage().equals(new Locale("en").getLanguage())) {
             locale = new Locale("en", "US");
-        }
-        else if (locale.getLanguage().equals(new Locale("da").getLanguage())) {
+        } else if (locale.getLanguage().equals(new Locale("da").getLanguage())) {
             locale = new Locale("da", "DK");
-        }
-        else {
+        } else {
             locale = new Locale("en", "US");
         }
     }
@@ -43,8 +41,9 @@ public class LanguageManager {
     /**
      * Function that takes either language of country, and by either language
      * or country decide the language of the game
+     *
      * @param language the language you want
-     * @param country the country you want
+     * @param country  the country you want
      */
     public void setLocale(String language, String country) {
         locale = new Locale(language, country);
@@ -54,8 +53,7 @@ public class LanguageManager {
     public void setLocale(String language) {
         if (language.contains("_")) {
             setLocale(language.split("_")[0], language.split("_")[1]);
-        }
-        else {
+        } else {
             locale = new Locale(language);
             messages = getMessages();
         }
@@ -71,7 +69,7 @@ public class LanguageManager {
 
         URL url;
         for (Locale locale : Locale.getAvailableLocales()) {
-            url = Game.class.getClassLoader().getResource("GameMessages_"+locale.toString()+".properties");
+            url = Game.class.getClassLoader().getResource("GameMessages_" + locale.toString() + ".properties");
 //            url = Resources.getResource("GameMessages_"+locale.toString()+".properties");
             if (url != null) {
                 locales.add(locale);
@@ -94,6 +92,7 @@ public class LanguageManager {
 
     /**
      * function that returns the messages
+     *
      * @return all the messages in the locale
      */
     private ResourceBundle getMessages() {
@@ -103,6 +102,7 @@ public class LanguageManager {
     /**
      * A function that takes a key for a specific message and returns
      * that message
+     *
      * @param messageKey key for a specific message
      * @return returns the specific message
      */
@@ -110,8 +110,7 @@ public class LanguageManager {
         String message = "";
         try {
             message = messages.getString(messageKey);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // Don't print the stacktrace when we run tests
             if (!messageKey.equals("non_existent_test_string")) {
                 e.printStackTrace();
