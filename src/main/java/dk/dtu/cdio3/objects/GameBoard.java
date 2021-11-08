@@ -19,7 +19,9 @@ import java.util.UUID;
 public class GameBoard {
     private final Field[] fields;
     private HashMap<UUID, Field> fieldMap = new HashMap<>();
+    private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
     private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
+    private UUID jailField = null;
     private JSONObject gameBoardJSON;
 
     private void loadGameBoardConfig() {
@@ -94,6 +96,7 @@ public class GameBoard {
                     break;
                 case "JailField":
                     fields[i] = new JailField();
+                    jailField = fields[i].getID();
                     break;
                 case "BreakField":
                     fields[i] = new BreakField();
@@ -109,6 +112,7 @@ public class GameBoard {
             Field field = fields[i];
             fieldMap.put(field.getID(), fields[i]);
             guiFields.put(field.getID(), field.getGUIStreet());
+            fieldPositions.put(field.getID(), i);
         }
 
         // Update the deedmanager with group deeds
@@ -140,5 +144,13 @@ public class GameBoard {
 
     public GUI_Field[] getGUIFields() {
         return guiFields.values().toArray(new GUI_Field[0]);
+    }
+
+    public int getFieldPosition(UUID fieldID) {
+        return fieldPositions.get(fieldID);
+    }
+
+    public UUID getJailField() {
+        return jailField;
     }
 }

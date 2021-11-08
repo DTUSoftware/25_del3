@@ -77,13 +77,49 @@ public class GameManager {
         int oldPlayerPosition = playerPositions.get(playerID);
         int newPlayerPosition = oldPlayerPosition+diceCup.getSum();
         playerPositions.put(playerID, newPlayerPosition);
+
+        Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());
+
         // Check for passing start
         if (((int) (oldPlayerPosition/gameBoard.getFieldAmount())) < ((int) (newPlayerPosition/gameBoard.getFieldAmount()))) {
             // passed start
             PlayerManager.getInstance().getPlayer(playerID).deposit(Game.getStartPassReward());
+            GUIManager.getInstance().showMessage(
+                    LanguageManager.getInstance().getString("passed_start")
+                            .replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName())
+                            .replace("{start_pass_amount}", Double.toString(Game.getStartPassReward()))
+            );
         }
-        // TODO: passing start check
 
+        field.doLandingAction(playerID);
+    }
+
+    public int getPlayerPosition(UUID playerID) {
+        return playerPositions.get(playerID);
+    }
+
+    public void setPlayerBoardPosition(UUID playerID, int boardPosition, boolean giveStartReward) {
+        int oldPlayerPosition = playerPositions.get(playerID);
+        int currentBoardPosition = oldPlayerPosition % gameBoard.getFieldAmount();
+
+        if (boardPosition > currentBoardPosition) {
+            setPlayerPosition(playerID, oldPlayerPosition+(boardPosition-currentBoardPosition));
+        }
+        else {
+            setPlayerPosition(playerID, oldPlayerPosition+(gameBoard.getFieldAmount()-currentBoardPosition)+boardPosition);
+            if (giveStartReward) {
+                PlayerManager.getInstance().getPlayer(playerID).deposit(Game.getStartPassReward());
+                GUIManager.getInstance().showMessage(
+                        LanguageManager.getInstance().getString("passed_start")
+                                .replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName())
+                                .replace("{start_pass_amount}", Double.toString(Game.getStartPassReward()))
+                );
+            }
+        }
+    }
+
+    public void setPlayerPosition(UUID playerID, int playerPosition) {
+        playerPositions.put(playerID, playerPosition);
         Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());
         field.doLandingAction(playerID);
     }
