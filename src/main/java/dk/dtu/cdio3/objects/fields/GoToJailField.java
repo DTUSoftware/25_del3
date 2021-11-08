@@ -22,6 +22,7 @@ public class GoToJailField extends Field {
 
     @Override
     public void reloadLanguage() {
-
+        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
+        super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
     }
 }

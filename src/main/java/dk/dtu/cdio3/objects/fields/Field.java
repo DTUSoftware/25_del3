@@ -9,11 +9,13 @@ import java.util.UUID;
 
 public abstract class Field {
     private UUID fieldID;
+    private String fieldName;
     private Color fieldColor;
     private GUI_Street guiStreet;
 
     Field(Color fieldColor, String fieldName, boolean description) {
         fieldID = UUID.randomUUID();
+        this.fieldName = fieldName;
         this.fieldColor = fieldColor;
 
         this.guiStreet = new GUI_Street();
@@ -39,5 +41,9 @@ public abstract class Field {
 
     public Color getFieldColor() {
         return fieldColor;
+    }
+
+    public String getFieldName() {
+        return fieldName;
     }
 }
