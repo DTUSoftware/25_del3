@@ -60,7 +60,7 @@ public class Account {
      *                  <code>false</code> if the amount didn't have a sufficient balance.
      */
     public boolean withdraw(double amount) {
-        return doAccountWithdraw(amount);
+        return doAccountWithdraw(-amount);
     }
 
     /**

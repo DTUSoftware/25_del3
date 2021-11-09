@@ -22,14 +22,25 @@ public class PropertyField extends Field {
         if (deedOwnership == null) {
             // TODO: Finish this buying stuff and bug test it
             // want to buy and/or have enough money
-        }
-        else {
+            String propertyName = LanguageManager.getInstance().getString("field_" + super.getFieldName() + "_name");
+            double temp_deed_price = DeedManager.getInstance().getDeed(deedID).getPrice();
+            if (PlayerManager.getInstance().getPlayer(playerID).getBalance() >= temp_deed_price) {
+                boolean want_to_buy = GUIManager.getInstance().askPrompt(
+                        LanguageManager.getInstance().getString("want_to_buy")
+                                .replace("{property_name}", propertyName)
+                                .replace("{property_price}", Float.toString(Math.round(temp_deed_price)))
+                );
+                if (want_to_buy) {
+                    PlayerManager.getInstance().getPlayer(playerID).withdraw(temp_deed_price);
+                    setPropertyOwner(playerID);
+                }
+            }
+        } else {
             // someone owns it
             if (deedOwnership.equals(playerID)) {
                 // same player owns it
                 GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("landed_on_own_property"));
-            }
-            else {
+            } else {
                 PlayerManager.getInstance().getPlayer(playerID).withdraw(DeedManager.getInstance().getDeed(deedID).getCurrentRent());
             }
 
@@ -38,7 +49,7 @@ public class PropertyField extends Field {
 
     @Override
     public void reloadLanguage() {
-        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
+        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_" + super.getFieldName() + "_name"));
     }
 
     public void updatePrices(UUID deedID) {
