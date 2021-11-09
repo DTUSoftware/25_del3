@@ -65,6 +65,12 @@ public class DeedManager {
         return playerDeeds.toArray(new UUID[0]);
     }
 
+    public void updatePlayerDeedPrices(UUID playerID) {
+        for (UUID deedID : getPlayerDeeds(playerID)) {
+            ((PropertyField) GameManager.getInstance().getGameBoard().getFieldFromID(getFieldID(deedID))).updatePrices(deedID);
+        }
+    }
+
     public UUID getDeedID(UUID fieldID) {
         return deeds.inverse().get(fieldID);
     }

@@ -6,8 +6,6 @@ import dk.dtu.cdio3.managers.LanguageManager;
 import dk.dtu.cdio3.managers.PlayerManager;
 import dk.dtu.cdio3.objects.Player;
 
-import java.util.Scanner;
-
 /**
  * Main class for the program
  */
