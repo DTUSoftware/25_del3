@@ -1,9 +1,6 @@
 package dk.dtu.cdio3.objects.fields;
 
-import dk.dtu.cdio3.managers.DeedManager;
-import dk.dtu.cdio3.managers.GUIManager;
-import dk.dtu.cdio3.managers.LanguageManager;
-import dk.dtu.cdio3.managers.PlayerManager;
+import dk.dtu.cdio3.managers.*;
 import dk.dtu.cdio3.objects.Deed;
 
 import java.awt.*;
@@ -34,19 +31,30 @@ public class PropertyField extends Field {
                     DeedManager.getInstance().updatePlayerDeedPrices(playerID);
                 }
             }
+            else {
+                // End the game
+                GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_buy").replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName()));
+                GameManager.getInstance().finishGame();
+            }
         } else {
             // someone owns it
             if (deedOwnership.equals(playerID)) {
                 // same player owns it
                 GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("landed_on_own_property"));
             } else {
-                GUIManager.getInstance().showMessage(
-                        LanguageManager.getInstance().getString("paid_rent")
-                                .replace("{property_rent}", Float.toString(Math.round(DeedManager.getInstance().getDeed(deedID).getCurrentRent())))
-                                .replace("{property_owner}", PlayerManager.getInstance().getPlayer(deedOwnership).getName())
-                                .replace("{property_name}", propertyName)
-                );
-                DeedManager.getInstance().getDeed(deedID).payRent(playerID);
+
+                if (DeedManager.getInstance().getDeed(deedID).payRent(playerID)) {
+                    GUIManager.getInstance().showMessage(
+                            LanguageManager.getInstance().getString("paid_rent")
+                                    .replace("{property_rent}", Float.toString(Math.round(DeedManager.getInstance().getDeed(deedID).getCurrentRent())))
+                                    .replace("{property_owner}", PlayerManager.getInstance().getPlayer(deedOwnership).getName())
+                                    .replace("{property_name}", propertyName)
+                    );
+                }
+                else {
+                    GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_pay_rent").replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName()));
+                    GameManager.getInstance().finishGame();
+                }
             }
 
         }

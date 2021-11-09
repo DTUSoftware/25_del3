@@ -43,8 +43,14 @@ public class GameManager {
 
         playerPositions = new HashMap<>();
         for (UUID playerID : playerIDs) {
-            playerPositions.put(playerID, 0);
+            setPlayerPosition(playerID, 0);
+            PlayerManager.getInstance().getPlayer(playerID).setBalance(Game.getStartBalance());
         }
+        gameFinished = false;
+    }
+
+    public void finishGame() {
+        gameFinished = true;
     }
 
     public void play() {
@@ -56,11 +62,69 @@ public class GameManager {
             // Let the player play
             playerPlay(currentPlayer);
 
-            // TODO: check win conditions and change state of gameFinished
-
             // Remove player from first in queue and put to end
             playerQueue.removeFirst();
             playerQueue.addLast(currentPlayer);
+        }
+        // find out who won
+        UUID maxPlayer = null;
+        UUID otherPlayer = null;
+        double maxValue = 0.0;
+        for (UUID playerID : PlayerManager.getInstance().getPlayerIDs()) {
+            double balance = PlayerManager.getInstance().getPlayer(playerID).getBalance();
+            if (balance > maxValue) {
+                maxPlayer = playerID;
+                maxValue = balance;
+                otherPlayer = null;
+            }
+            else if (balance == maxValue) {
+                otherPlayer = playerID;
+            }
+        }
+
+        if (otherPlayer == null) {
+            GUIManager.getInstance().showMessage(
+                    LanguageManager.getInstance().getString("player_won_balance")
+                            .replace("{player_name}", PlayerManager.getInstance().getPlayer(maxPlayer).getName())
+                            .replace("{balance}", Float.toString(Math.round(maxValue)))
+            );
+        }
+        else {
+            maxPlayer = null;
+            otherPlayer = null;
+            maxValue = 0.0;
+
+            for (UUID playerID : PlayerManager.getInstance().getPlayerIDs()) {
+                double wealth = PlayerManager.getInstance().getPlayer(playerID).getBalance();
+
+                for (UUID deedID : DeedManager.getInstance().getPlayerDeeds(playerID)) {
+                    wealth = wealth + DeedManager.getInstance().getDeed(deedID).getPrice();
+                }
+
+                if (wealth > maxValue) {
+                    maxPlayer = playerID;
+                    maxValue = wealth;
+                    otherPlayer = null;
+                }
+                else if (wealth == maxValue) {
+                    otherPlayer = playerID;
+                }
+            }
+
+            if (otherPlayer == null) {
+                GUIManager.getInstance().showMessage(
+                        LanguageManager.getInstance().getString("player_won_wealth")
+                                .replace("{player_name}", PlayerManager.getInstance().getPlayer(maxPlayer).getName())
+                                .replace("{balance}", Float.toString(Math.round(maxValue)))
+                );
+            }
+            else {
+                GUIManager.getInstance().showMessage(
+                        LanguageManager.getInstance().getString("game_tie")
+                                .replace("{player1_name}", PlayerManager.getInstance().getPlayer(maxPlayer).getName())
+                                .replace("{player2_name}", PlayerManager.getInstance().getPlayer(otherPlayer).getName())
+                );
+            }
         }
     }
 

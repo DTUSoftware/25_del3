@@ -62,7 +62,7 @@ public class Deed {
         return this.groupRent;
     }
 
-    public void payRent(UUID playerID) {
-        PlayerManager.getInstance().getPlayer(playerID).withdraw(getCurrentRent());
+    public boolean payRent(UUID playerID) {
+        return PlayerManager.getInstance().getPlayer(playerID).withdraw(getCurrentRent());
     }
 }

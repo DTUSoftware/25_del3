@@ -26,8 +26,8 @@ public class Game {
         GameManager.getInstance().getGameBoard().reloadLanguage();
 
         // Create players
-        int ammount_of_players = gm.askPlayers();
-        for (int i = 1; i <= ammount_of_players; i++) {
+        int amount_of_players = gm.askPlayers();
+        for (int i = 1; i <= amount_of_players; i++) {
             String playerName = gm.getUserString(LanguageManager.getInstance().getString("enter_player_name").replace("{player_number}", Integer.toString(i)));
             Player player = PlayerManager.getInstance().createPlayer(playerName, startingBalance);
 
@@ -36,12 +36,15 @@ public class Game {
 
         }
 
+        do {
+            // Add players to the game queue
+            GameManager.getInstance().setupGame(PlayerManager.getInstance().getPlayerIDs());
 
-        // Add players to the game queue
-        GameManager.getInstance().setupGame(PlayerManager.getInstance().getPlayerIDs());
+            // Play the game
+            GameManager.getInstance().play();
+        }
+        while (GUIManager.getInstance().askPrompt(LanguageManager.getInstance().getString("play_again")));
 
-        // Play the game
-        GameManager.getInstance().play();
     }
 
     public static void setStartPassReward(double startPassReward) {
@@ -50,5 +53,9 @@ public class Game {
 
     public static double getStartPassReward() {
         return startPassReward;
+    }
+
+    public static double getStartBalance() {
+        return startingBalance;
     }
 }
