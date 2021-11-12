@@ -17,6 +17,11 @@ public class StartField extends Field {
     }
 
     @Override
+    public void doLeavingAction(UUID playerID) {
+
+    }
+
+    @Override
     public void reloadLanguage() {
         super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
         super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));

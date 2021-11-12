@@ -103,6 +103,7 @@ public class GUIManager {
         if (localeMap.isEmpty()) {
             return;
         }
+
         String language = gui.getUserSelection("Choose a language", localeMap.keySet().toArray(new String[0]));
 
         Locale locale = localeMap.get(language);

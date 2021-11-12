@@ -64,6 +64,10 @@ public class LanguageManager {
         messages = getMessages();
     }
 
+    public String getLocale() {
+        return locale.getDisplayLanguage();
+    }
+
     private Locale[] getLocales() {
         ArrayList<Locale> locales = new ArrayList<>();
 
@@ -117,6 +121,7 @@ public class LanguageManager {
             }
             message = "Could not read message '" + messageKey + "' from locale " + locale.getLanguage();
         }
+        // System.out.println(getLocale() + " - " + messageKey +": " + message);
         return message;
     }
 }

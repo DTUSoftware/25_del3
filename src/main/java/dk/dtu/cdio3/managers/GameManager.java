@@ -66,6 +66,7 @@ public class GameManager {
             playerQueue.removeFirst();
             playerQueue.addLast(currentPlayer);
         }
+
         // find out who won
         UUID maxPlayer = null;
         UUID otherPlayer = null;
@@ -129,6 +130,10 @@ public class GameManager {
     }
 
     private void playerPlay(UUID playerID) {
+        int playerPosition = playerPositions.get(playerID);
+        // Do leaving action
+        gameBoard.getField(playerPosition%gameBoard.getFieldAmount()).doLeavingAction(playerID);
+
         if (!Game.debug) {
             GUIManager.getInstance().waitUserRoll(PlayerManager.getInstance().getPlayer(playerID).getName());
         }
@@ -138,14 +143,13 @@ public class GameManager {
         GUIManager.getInstance().updateDice(diceValues[0], diceValues[1]);
 
         // Positions
-        int oldPlayerPosition = playerPositions.get(playerID);
-        int newPlayerPosition = oldPlayerPosition+diceCup.getSum();
+        int newPlayerPosition = playerPosition+diceCup.getSum();
         playerPositions.put(playerID, newPlayerPosition);
 
         Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());
 
         // Check for passing start
-        if (((int) (oldPlayerPosition/gameBoard.getFieldAmount())) < ((int) (newPlayerPosition/gameBoard.getFieldAmount()))) {
+        if (((int) (playerPosition/gameBoard.getFieldAmount())) < ((int) (newPlayerPosition/gameBoard.getFieldAmount()))) {
             // passed start
             PlayerManager.getInstance().getPlayer(playerID).deposit(Game.getStartPassReward());
             GUIManager.getInstance().showMessage(
