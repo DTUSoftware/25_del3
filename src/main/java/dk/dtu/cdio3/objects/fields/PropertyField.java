@@ -30,8 +30,7 @@ public class PropertyField extends Field {
                     DeedManager.getInstance().setDeedOwnership(DeedManager.getInstance().getDeedID(super.getID()), playerID);
                     DeedManager.getInstance().updatePlayerDeedPrices(playerID);
                 }
-            }
-            else {
+            } else {
                 // End the game
                 GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_buy").replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName()));
                 GameManager.getInstance().finishGame();
@@ -50,8 +49,7 @@ public class PropertyField extends Field {
                                     .replace("{property_owner}", PlayerManager.getInstance().getPlayer(deedOwnership).getName())
                                     .replace("{property_name}", propertyName)
                     );
-                }
-                else {
+                } else {
                     GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_pay_rent").replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName()));
                     GameManager.getInstance().finishGame();
                 }
