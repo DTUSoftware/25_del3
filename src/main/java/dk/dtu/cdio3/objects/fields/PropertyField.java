@@ -59,17 +59,22 @@ public class PropertyField extends Field {
     }
 
     @Override
+    public void doLeavingAction(UUID playerID) {
+
+    }
+
+    @Override
     public void reloadLanguage() {
         super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_" + super.getFieldName() + "_name"));
-        super.getGUIStreet().setRentLabel(LanguageManager.getInstance().getString("property_rent_label"));
-        super.getGUIStreet().setOwnableLabel(LanguageManager.getInstance().getString("property_owner_label"));
+        super.getGUIStreet().setRentLabel(LanguageManager.getInstance().getString("rent")+": ");
+        super.getGUIStreet().setOwnableLabel(LanguageManager.getInstance().getString("owner")+": ");
     }
 
     public void updatePrices(UUID deedID) {
         Deed fieldDeed = DeedManager.getInstance().getDeed(deedID);
         super.getGUIStreet().setRent(Double.toString(fieldDeed.getCurrentRent()));
         super.getGUIStreet().setSubText(Double.toString(fieldDeed.getPrice()));
-        super.getGUIStreet().setDescription("Price: " + Double.toString(fieldDeed.getPrice()) + " | Rent: " + Double.toString(fieldDeed.getRent()) + " | Group Rent: " + Double.toString(fieldDeed.getGroupRent()));
+        super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("price")+": " + Double.toString(fieldDeed.getPrice()) + " | "+LanguageManager.getInstance().getString("rent")+": " + Double.toString(fieldDeed.getRent()) + " | "+LanguageManager.getInstance().getString("group_rent")+": " + Double.toString(fieldDeed.getGroupRent()));
     }
 
     public void setPropertyOwner(UUID playerID) {

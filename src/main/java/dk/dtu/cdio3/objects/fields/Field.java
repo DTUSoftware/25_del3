@@ -29,6 +29,8 @@ public abstract class Field {
 
     public abstract void doLandingAction(UUID playerID);
 
+    public abstract void doLeavingAction(UUID playerID);
+
     public abstract void reloadLanguage();
 
     public UUID getID() {
