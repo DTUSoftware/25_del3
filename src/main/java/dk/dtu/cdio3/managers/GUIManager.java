@@ -193,5 +193,18 @@ public class GUIManager {
 
         player.setBalance((int) balance); // The GUI only accepts integers, so typecasting
     }
+
+    /**
+     * Shows a chance card with the given text, and stops taking control of thread when user clicks ok.
+     *
+     * @param cardText  The text of the chance card.
+     */
+    public void showChanceCard(String cardText) {
+        gui.setChanceCard(cardText);
+        gui.displayChanceCard();
+        showMessage(LanguageManager.getInstance().getString("got_a_chance_card"));
+        gui.displayChanceCard();
+        gui.setChanceCard(LanguageManager.getInstance().getString("no_chance_card"));
+    }
 }
 
