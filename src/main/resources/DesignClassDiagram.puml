@@ -12,16 +12,28 @@ package diplomitdtu.matadorgui {}
 ' Managers
 package managers {
     class GameManager {
+        {static} -gameManager : GameManager
 
+        -GameManager()
+        {static} +getInstance() : GameManager
     }
 
     class PlayerManager {
+        {static} -playerManager : PlayerManager
+
+        -PlayerManager()
+        {static} +getInstance() : PlayerManager
     }
 
     class DeedManager {
+        {static} -deedManager : DeedManager
+
         -deeds : BiMap<deedID:UUID, fieldID:UUID> [16]
         -deedOwnership : HashMap<deedID:UUID, playerID:UUID> [16]
         -deedGroups : HashMap<color:Color, deeds:Deed[2]> [8]
+
+        -DeedManager()
+        {static} +getInstance() : DeedManager
 
         +getPlayerDeeds(playerID:UUID) : Deed[]
         +getDeed(fieldID:UUID) : UUID
@@ -36,26 +48,31 @@ package managers {
 
         -LanguageManager()
         {static} +getInstance() : LanguageManager
+
         +getMessage(messageString) : String
     }
 
     class GUIManager {
+        {static} -guiManager : GUIManager
 
+        -GUIManager()
+        {static} +getInstance() : GUIManager
     }
 
     GUIManager ..> diplomitdtu.matadorgui : <<use>>
 }
 
-Game --> "1 -gameManager" GameManager
-Game --> "1 -playerManager" PlayerManager
-Game --> "1 -guiManager" GUIManager
-Game --> "1 -deedManager" DeedManager
+Game ..> GameManager : <<use>>
+Game ..> PlayerManager : <<use>>
+Game ..> GUIManager : <<use>>
+Game ..> LanguageManager : <<use>>
 
 
 ' Objects
 package objects {
     class GameBoard {
         +getField(position:int) : Field
+        +getRandomChanceCard() : ChanceCard
     }
 
     class DiceCup {
@@ -93,39 +110,21 @@ package objects {
         abstract Field {
             -fieldID : UUID
 
-            {abstract} +doLandingAction(:Player) : void
+            {abstract} +doLandingAction(playerID:UUID) : void
         }
+    }
 
-        class StartField {
+    package chancecards {
+        abstract ChanceCard {
+            -cardName : String
+
+            {abstract} +doCardAction(playerID:UUID) : void
+            +showCard() : void
         }
-
-        class PropertyField {
-            -color : Color
-            
-            +isAvailable() : boolean
-        }
-
-        class ChanceField {
-        }
-
-        class JailField {
-        }
-
-        class BreakField {
-        }
-
-        class GoToJailField {
-        }
-
-        Field <|-- StartField
-        Field <|-- PropertyField
-        Field <|-- ChanceField
-        Field <|-- JailField
-        Field <|-- BreakField
-        Field <|-- GoToJailField
     }
 
     GameBoard --> "24 -fields" Field
+    GameBoard --> "18 -chanceCards" ChanceCard
     DiceCup --> "2 -dice" Die
     Player --> "1 -account" Account
 }
