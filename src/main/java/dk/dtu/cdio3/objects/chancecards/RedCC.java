@@ -1,5 +1,7 @@
 package dk.dtu.cdio3.objects.chancecards;
 
+import java.util.UUID;
+
 /**
  * Funktion af kort;
  * Ryk frem til et rødt felt.
@@ -7,5 +9,9 @@ package dk.dtu.cdio3.objects.chancecards;
  * Ellers skal du BETALE leje til ejeren
  */
 
-public class RedCC {
+public class RedCC  extends ChanceCard {
+    @Override
+    public void doCardAction(UUID playerID) {
+
+    }
 }

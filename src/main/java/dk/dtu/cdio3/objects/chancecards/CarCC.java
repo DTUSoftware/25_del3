@@ -1,5 +1,7 @@
 package dk.dtu.cdio3.objects.chancecards;
 
+import java.util.UUID;
+
 /**
  * Giv dette kort til BILEN, og tag et chancekort mere.
  * BIL På din næste tur skal du drøne frem til et hvilket som helst ledigt felt og købe det.
@@ -7,5 +9,9 @@ package dk.dtu.cdio3.objects.chancecards;
  */
 
 public class CarCC extends ChanceCard {
+    @Override
+    public void doCardAction(UUID playerID) {
+
+    }
 }
 
