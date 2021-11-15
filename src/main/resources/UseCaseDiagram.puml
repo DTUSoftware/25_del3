@@ -9,7 +9,7 @@ rectangle Game {
     usecase "Play the game" as Play
 }
 
-Player "2" -- (Play)
+Player "2..4" -- (Play)
 
 
 
