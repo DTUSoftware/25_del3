@@ -1,0 +1,137 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+skinparam classAttributeIconSize 0
+
+class Game {
+
+}
+
+package diplomitdtu.matadorgui {}
+
+' Managers
+package managers {
+    class GameManager {
+
+    }
+
+    class PlayerManager {
+    }
+
+    class DeedManager {
+        -deeds : BiMap<deedID:UUID, fieldID:UUID> [16]
+        -deedOwnership : HashMap<deedID:UUID, playerID:UUID> [16]
+        -deedGroups : HashMap<color:Color, deeds:Deed[2]> [8]
+
+        +getPlayerDeeds(playerID:UUID) : Deed[]
+        +getDeed(fieldID:UUID) : UUID
+        +getField(deedID:UUID) : UUID
+        +getDeedGroupDeeds(color:Color) : Deed[2]
+        +createDeed(fieldID:UUID) : void
+        +setDeedOwner(deedID:UUID, playerID:UUID) : void
+    }
+
+    class LanguageManager {
+        {static} -languageManager : LanguageManager
+
+        -LanguageManager()
+        {static} +getInstance() : LanguageManager
+        +getMessage(messageString) : String
+    }
+
+    class GUIManager {
+
+    }
+
+    GUIManager ..> diplomitdtu.matadorgui : <<use>>
+}
+
+Game --> "1 -gameManager" GameManager
+Game --> "1 -playerManager" PlayerManager
+Game --> "1 -guiManager" GUIManager
+Game --> "1 -deedManager" DeedManager
+
+
+' Objects
+package objects {
+    class GameBoard {
+        +getField(position:int) : Field
+    }
+
+    class DiceCup {
+        +raffle() : void
+        +getValues() : int[]
+        +getSum() : int
+    }
+
+    class Die {
+        -value : int
+
+        +roll() : int
+    }
+
+    class Player {
+        -name : String
+        -playerID : UUID
+    }
+
+    class Account {
+        -balance : double
+    }
+
+    class Deed {
+        -price : double
+        -rent : double
+        -groupRent : double
+
+        +getPrice() : double
+        +getRent() : double
+        +payRent(player) : void
+    }
+
+    package fields {
+        abstract Field {
+            -fieldID : UUID
+
+            {abstract} +doLandingAction(:Player) : void
+        }
+
+        class StartField {
+        }
+
+        class PropertyField {
+            -color : Color
+            
+            +isAvailable() : boolean
+        }
+
+        class ChanceField {
+        }
+
+        class JailField {
+        }
+
+        class BreakField {
+        }
+
+        class GoToJailField {
+        }
+
+        Field <|-- StartField
+        Field <|-- PropertyField
+        Field <|-- ChanceField
+        Field <|-- JailField
+        Field <|-- BreakField
+        Field <|-- GoToJailField
+    }
+
+    GameBoard --> "24 -fields" Field
+    DiceCup --> "2 -dice" Die
+    Player --> "1 -account" Account
+}
+
+PlayerManager --> "2..4 -players" Player
+GameManager --> "1 -gameBoard" GameBoard
+GameManager --> "1 -diceCup" DiceCup
+
+@enduml
