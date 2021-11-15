@@ -1,5 +1,7 @@
 package dk.dtu.cdio3.objects.chancecards;
 
+import java.util.UUID;
+
 /**
  * GRATIS FELT!
  * Ryk frem til Skaterparken
@@ -10,5 +12,9 @@ package dk.dtu.cdio3.objects.chancecards;
  * leje til ejeren
  */
 
-public class SkateparkCC {
+public class SkateparkCC  extends ChanceCard {
+    @Override
+    public void doCardAction(UUID playerID) {
+
+    }
 }
