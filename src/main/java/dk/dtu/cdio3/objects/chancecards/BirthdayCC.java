@@ -1,5 +1,7 @@
 package dk.dtu.cdio3.objects.chancecards;
 
+import dk.dtu.cdio3.managers.PlayerManager;
+
 import java.util.UUID;
 
 /**
@@ -9,6 +11,10 @@ import java.util.UUID;
  */
 
 public class BirthdayCC extends ChanceCard {
+    BirthdayCC(String cardName) {
+        super(cardName);
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 

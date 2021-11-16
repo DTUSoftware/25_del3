@@ -1,5 +1,7 @@
 package dk.dtu.cdio3.objects.chancecards;
 
+import dk.dtu.cdio3.managers.PlayerManager;
+
 import java.util.UUID;
 
 /**
@@ -8,9 +10,13 @@ import java.util.UUID;
  * Fra banken
  */
 
-public class DidHomeWorkCC  extends ChanceCard {
+public class DidHomeWorkCC extends ChanceCard {
+    DidHomeWorkCC(String cardName) {
+        super(cardName);
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
-
+        PlayerManager.getInstance().getPlayer(playerID).deposit(2000);
     }
 }
