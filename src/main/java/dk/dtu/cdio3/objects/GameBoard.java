@@ -111,7 +111,7 @@ public class GameBoard {
 
             Field field = fields[i];
             fieldMap.put(field.getID(), fields[i]);
-            guiFields.put(field.getID(), field.getGUIStreet());
+            guiFields.put(field.getID(), field.getGUIField());
             fieldPositions.put(field.getID(), i);
         }
 

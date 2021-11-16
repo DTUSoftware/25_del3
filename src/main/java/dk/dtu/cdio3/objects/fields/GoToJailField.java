@@ -4,6 +4,8 @@ import dk.dtu.cdio3.managers.GUIManager;
 import dk.dtu.cdio3.managers.GameManager;
 import dk.dtu.cdio3.managers.LanguageManager;
 import dk.dtu.cdio3.managers.PlayerManager;
+import gui_fields.GUI_Jail;
+import gui_fields.GUI_Ownable;
 
 import java.awt.*;
 import java.util.UUID;
@@ -11,7 +13,6 @@ import java.util.UUID;
 public class GoToJailField extends Field {
     public GoToJailField() {
         super(Color.BLUE, "go_to_jail", true);
-        super.getGUIStreet().setBorder(Color.BLACK);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class GoToJailField extends Field {
 
     @Override
     public void reloadLanguage() {
-        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
-        super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
+        super.getGUIField().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
+        super.getGUIField().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
     }
 }

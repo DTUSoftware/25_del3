@@ -14,7 +14,6 @@ public class JailField extends Field {
 
     public JailField() {
         super(Color.ORANGE, "jail", true);
-        super.getGUIStreet().setBorder(Color.BLACK);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class JailField extends Field {
 
     @Override
     public void reloadLanguage() {
-        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
-        super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
+        super.getGUIField().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
+        super.getGUIField().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
     }
 }

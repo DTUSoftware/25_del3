@@ -3,6 +3,7 @@ package dk.dtu.cdio3.managers;
 import dk.dtu.cdio3.objects.fields.Field;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Field;
+import gui_fields.GUI_Jail;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
 
@@ -93,9 +94,6 @@ public class GUIManager {
 
     /**
      * Helper function to ask for Language.
-     *
-     * @return <code>true</code> if the player(s) choose
-     * English, for Danish <code>false</code>.
      */
     public void askLanguage() {
         HashMap<String, Locale> localeMap = LanguageManager.getInstance().getLocalesMap();
@@ -120,6 +118,22 @@ public class GUIManager {
         String[] playerammountlist = {"2", "3", "4"};
         String player_Ammount = gui.getUserSelection(LanguageManager.getInstance().getString("choose_player_amount"), playerammountlist);
         return Integer.parseInt(player_Ammount);
+    }
+
+    /**
+     * Asks the player which car type they want.
+     *
+     * @return The GUI_Car.Type that the player chose.
+     */
+    public GUI_Car.Type askCarType() {
+        String[] carTypes = Arrays.stream(GUI_Car.Type.class.getEnumConstants()).map(Enum::name).toArray(String[]::new); // https://stackoverflow.com/a/13783744/12418245
+        for (int i = 0; i < carTypes.length; i++) {
+            if (!carTypes[i].equals("UFO")) {
+                carTypes[i] = carTypes[i].substring(0,1).toUpperCase() + carTypes[i].substring(1).toLowerCase();
+            }
+        }
+        String carType = gui.getUserSelection(LanguageManager.getInstance().getString("choose_player_car"), carTypes);
+        return GUI_Car.Type.getTypeFromString(carType.toUpperCase());
     }
 
     /**
@@ -154,7 +168,8 @@ public class GUIManager {
      * player in question.
      */
     public GUI_Player createGUIPlayer(String playerName, double startingBalance) {
-        GUI_Car car = new GUI_Car();
+        GUI_Car.Type carType = askCarType();
+        GUI_Car car = new GUI_Car((Color)null, (Color)null, carType, GUI_Car.Pattern.FILL);
 
         GUI_Player player = new GUI_Player(playerName, (int) startingBalance, car); // the GUI takes int, so typecast
 
@@ -178,7 +193,7 @@ public class GUIManager {
         Field field = GameManager.getInstance().getGameBoard().getField(fieldNumber);
         assert (field != null);
 
-        player.getCar().setPosition(field.getGUIStreet());
+        player.getCar().setPosition(field.getGUIField());
         return field;
     }
 

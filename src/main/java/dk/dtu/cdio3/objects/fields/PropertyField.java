@@ -2,6 +2,7 @@ package dk.dtu.cdio3.objects.fields;
 
 import dk.dtu.cdio3.managers.*;
 import dk.dtu.cdio3.objects.Deed;
+import gui_fields.GUI_Ownable;
 
 import java.awt.*;
 import java.util.UUID;
@@ -9,6 +10,7 @@ import java.util.UUID;
 public class PropertyField extends Field {
     public PropertyField(Color color, String fieldName) {
         super(color, fieldName, false);
+//        ((GUI_Ownable) super.getGUIField()).setBorder(Color.BLACK);
     }
 
     @Override
@@ -65,19 +67,19 @@ public class PropertyField extends Field {
 
     @Override
     public void reloadLanguage() {
-        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_" + super.getFieldName() + "_name"));
-        super.getGUIStreet().setRentLabel(LanguageManager.getInstance().getString("rent")+": ");
-        super.getGUIStreet().setOwnableLabel(LanguageManager.getInstance().getString("owner")+": ");
+        super.getGUIField().setTitle(LanguageManager.getInstance().getString("field_" + super.getFieldName() + "_name"));
+        ((GUI_Ownable) super.getGUIField()).setRentLabel(LanguageManager.getInstance().getString("rent")+": ");
+        ((GUI_Ownable) super.getGUIField()).setOwnableLabel(LanguageManager.getInstance().getString("owner")+": ");
     }
 
     public void updatePrices(UUID deedID) {
         Deed fieldDeed = DeedManager.getInstance().getDeed(deedID);
-        super.getGUIStreet().setRent(Double.toString(fieldDeed.getCurrentRent()));
-        super.getGUIStreet().setSubText(Double.toString(fieldDeed.getPrice()));
-        super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("price")+": " + Double.toString(fieldDeed.getPrice()) + " | "+LanguageManager.getInstance().getString("rent")+": " + Double.toString(fieldDeed.getRent()) + " | "+LanguageManager.getInstance().getString("group_rent")+": " + Double.toString(fieldDeed.getGroupRent()));
+        ((GUI_Ownable) super.getGUIField()).setRent(Double.toString(fieldDeed.getCurrentRent()));
+        super.getGUIField().setSubText(Double.toString(fieldDeed.getPrice()));
+        super.getGUIField().setDescription(LanguageManager.getInstance().getString("price")+": " + Double.toString(fieldDeed.getPrice()) + " | "+LanguageManager.getInstance().getString("rent")+": " + Double.toString(fieldDeed.getRent()) + " | "+LanguageManager.getInstance().getString("group_rent")+": " + Double.toString(fieldDeed.getGroupRent()));
     }
 
     public void setPropertyOwner(UUID playerID) {
-        super.getGUIStreet().setOwnerName(PlayerManager.getInstance().getPlayer(playerID).getName());
+        ((GUI_Ownable) super.getGUIField()).setOwnerName(PlayerManager.getInstance().getPlayer(playerID).getName());
     }
 }

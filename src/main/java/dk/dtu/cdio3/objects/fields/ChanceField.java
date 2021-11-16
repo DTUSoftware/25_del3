@@ -8,7 +8,6 @@ import java.util.UUID;
 public class ChanceField extends Field {
     public ChanceField() {
         super(Color.ORANGE, "chance", true);
-        super.getGUIStreet().setBorder(Color.MAGENTA);
     }
 
     @Override
@@ -23,7 +22,7 @@ public class ChanceField extends Field {
 
     @Override
     public void reloadLanguage() {
-        super.getGUIStreet().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
-        super.getGUIStreet().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
+        super.getGUIField().setTitle(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_name"));
+        super.getGUIField().setDescription(LanguageManager.getInstance().getString("field_"+super.getFieldName()+"_description"));
     }
 }
