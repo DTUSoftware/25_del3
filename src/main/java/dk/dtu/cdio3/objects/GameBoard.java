@@ -12,10 +12,7 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class GameBoard {
     private final Field[] fields;
@@ -27,6 +24,7 @@ public class GameBoard {
             new LightblueYellowCC(), new MoveFieldsCC(), new MoveOrDrawCC(), new OrangeBlueCC(), new OrangeCC(),
             new RedCC(), new SalmonGreenCC(), new ShipCC(), new SkateparkCC(), new StartCC()};
     private JSONObject gameBoardJSON;
+    private Random rand = new Random();
 
     private void loadGameBoardConfig() {
         try {
@@ -151,6 +149,15 @@ public class GameBoard {
 
     public int getFieldPosition(UUID fieldID) {
         return fieldPositions.get(fieldID);
+    }
+
+    /**
+     * Gets a random chance card.
+     *
+     * @return  The randomly picked chance card.
+     */
+    public ChanceCard getChanceCard() {
+        return chanceCards[rand.nextInt(chanceCards.length)];
     }
 
     public UUID getFieldIDFromType(String fieldClassName) {
