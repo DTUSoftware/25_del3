@@ -30,14 +30,21 @@ public class JailField extends Field {
     public void doLeavingAction(UUID playerID) {
         Player player = PlayerManager.getInstance().getPlayer(playerID);
         if (player.isJailed()) {
-            // TODO: implement get out of jail free card
-            if (player.withdraw(jailBailOut)) {
-                GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("paid_bailout").replace("{amount}", Float.toString(Math.round(jailBailOut))));
+            // if the player has a bail card
+            if (player.takeBailCard()) {
+                GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("card_bailout"));
             }
             else {
-                GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_pay_bailout"));
-                GameManager.getInstance().finishGame();
+                // if the player can pay bailout fees
+                if (player.withdraw(jailBailOut)) {
+                    GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("paid_bailout").replace("{amount}", Float.toString(Math.round(jailBailOut))));
+                }
+                else {
+                    GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_pay_bailout"));
+                    GameManager.getInstance().finishGame();
+                }
             }
+
         }
     }
 

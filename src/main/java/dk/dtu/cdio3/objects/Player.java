@@ -8,6 +8,7 @@ public class Player {
     private final String name;
     private final UUID playerID;
     private final Account account;
+    private int bailCards = 0;
     private boolean jailed = false;
 
     public Player(String name) {
@@ -69,6 +70,18 @@ public class Player {
 
     public boolean isJailed() {
         return jailed;
+    }
+
+    public void giveBailCard() {
+        this.bailCards++;
+    }
+
+    public boolean takeBailCard() {
+        if (this.bailCards > 0) {
+            this.bailCards--;
+            return true;
+        }
+        return false;
     }
 
     public double getBalance() {
