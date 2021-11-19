@@ -55,6 +55,7 @@ public class GameManager {
 
     public void play() {
         UUID currentPlayer;
+        // Loop until the game finishes
         while (!gameFinished) {
             // Get next player in queue
             currentPlayer = playerQueue.getFirst();
@@ -130,12 +131,14 @@ public class GameManager {
     }
 
     private void playerPlay(UUID playerID) {
+        GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("player_turn").replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName()));
+
         int playerPosition = playerPositions.get(playerID);
         // Do leaving action
         gameBoard.getField(playerPosition%gameBoard.getFieldAmount()).doLeavingAction(playerID);
 
         if (!Game.debug) {
-            GUIManager.getInstance().waitUserRoll(PlayerManager.getInstance().getPlayer(playerID).getName());
+            GUIManager.getInstance().waitUserRoll();
         }
         diceCup.raffle();
 

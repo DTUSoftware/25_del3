@@ -150,12 +150,9 @@ public class GUIManager {
     /**
      * Function to wait for the user to roll their dice (clicking
      * a button). The loop won't continue before they click.
-     *
-     * @param playerName The name of a player who has
-     *                   to roll the dice now.
      */
-    public void waitUserRoll(String playerName) {
-        gui.showMessage(LanguageManager.getInstance().getString("player_turn").replace("{player_name}", playerName));
+    public void waitUserRoll() {
+        gui.showMessage(LanguageManager.getInstance().getString("click_to_roll"));
     }
 
     /**

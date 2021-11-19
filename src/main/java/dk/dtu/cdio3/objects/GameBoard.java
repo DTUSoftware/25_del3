@@ -19,10 +19,16 @@ public class GameBoard {
     private HashMap<UUID, Field> fieldMap = new HashMap<>();
     private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
     private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
-    private final ChanceCard[] chanceCards = new ChanceCard[] {new BailCC(), new BirthdayCC(), new BoardWalkCC(),
-            new BrownRedCC(), new CarCC(), new DidHomeWorkCC(), new EatCandyCC(), new LightBlueCC(),
-            new LightblueYellowCC(), new MoveFieldsCC(), new MoveOrDrawCC(), new OrangeBlueCC(), new OrangeCC(),
-            new RedCC(), new SalmonGreenCC(), new ShipCC(), new SkateparkCC(), new StartCC()};
+//    private final ChanceCard[] chanceCards = new ChanceCard[] {
+//            new BailCC(), new BirthdayCC(), new BoardWalkCC(), new BrownRedCC(), new CarCC(), new DidHomeWorkCC(),
+//            new EatCandyCC(), new LightBlueCC(), new LightblueYellowCC(), new MoveFieldsCC(), new MoveOrDrawCC(),
+//            new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(), new ShipCC(), new SkateparkCC(),
+//            new StartCC()
+//    };
+
+    private final ChanceCard[] chanceCards = new ChanceCard[] {
+            new BoardWalkCC()
+    };
     private JSONObject gameBoardJSON;
     private Random rand = new Random();
 
@@ -160,16 +166,26 @@ public class GameBoard {
         return chanceCards[rand.nextInt(chanceCards.length)];
     }
 
-    public UUID getFieldIDFromType(String fieldClassName) {
+    public UUID getFieldIDFromType(String fieldName) {
         for (UUID uuid : fieldMap.keySet()) {
             try {
-                if (Class.forName("dk.dtu.cdio3.objects.fields."+fieldClassName).isInstance(fieldMap.get(uuid))) {
+                if (Class.forName("dk.dtu.cdio3.objects.fields."+fieldName).isInstance(fieldMap.get(uuid))) {
+                    return uuid;
+                }
+
+            }
+            catch (Exception e) {
+                System.out.println("Could not find fieldName in Field Class names: " + e.toString());
+            }
+
+            try {
+                if (Class.forName("dk.dtu.cdio3.objects.fields.PropertyField").isInstance(fieldMap.get(uuid)) &&
+                        fieldMap.get(uuid).getFieldName().equals(fieldName)) {
                     return uuid;
                 }
             }
             catch (Exception e) {
-                System.out.println(e.toString());
-                return null;
+                System.out.println("Field was not a property field: " + e.toString());
             }
         }
         return null;
