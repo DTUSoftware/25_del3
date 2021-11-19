@@ -11,8 +11,8 @@ import java.util.UUID;
  */
 
 public class BirthdayCC extends ChanceCard {
-    BirthdayCC(String cardName) {
-        super(cardName);
+    public BirthdayCC() {
+        super("birthday");
     }
 
     @Override

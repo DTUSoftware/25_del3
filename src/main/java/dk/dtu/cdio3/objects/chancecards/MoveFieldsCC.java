@@ -12,7 +12,7 @@ public class MoveFieldsCC  extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    MoveFieldsCC() {
+    public MoveFieldsCC() {
         super("movefields");
     }
 

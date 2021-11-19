@@ -12,7 +12,7 @@ public class ShipCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    ShipCC() {
+    public ShipCC() {
         super("ship");
     }
 

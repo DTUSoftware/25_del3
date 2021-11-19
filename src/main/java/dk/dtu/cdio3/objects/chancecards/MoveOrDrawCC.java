@@ -12,7 +12,7 @@ public class MoveOrDrawCC  extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    MoveOrDrawCC() {
+    public MoveOrDrawCC() {
         super("moveordraw");
     }
 

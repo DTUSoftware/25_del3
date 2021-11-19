@@ -12,7 +12,7 @@ public class CarCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    CarCC() {
+    public CarCC() {
         super("car");
     }
 

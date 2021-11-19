@@ -11,7 +11,7 @@ public class BoardWalkCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    BoardWalkCC() {
+    public BoardWalkCC() {
         super("boardwalk");
     }
 

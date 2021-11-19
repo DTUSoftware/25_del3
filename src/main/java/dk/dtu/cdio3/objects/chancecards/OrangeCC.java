@@ -13,7 +13,7 @@ public class OrangeCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    OrangeCC() {
+    public OrangeCC() {
         super("orange");
     }
 

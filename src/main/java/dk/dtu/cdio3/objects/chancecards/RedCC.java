@@ -13,7 +13,7 @@ public class RedCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    RedCC() {
+    public RedCC() {
         super("red");
     }
 

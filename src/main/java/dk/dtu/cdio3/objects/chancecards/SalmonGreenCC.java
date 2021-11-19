@@ -12,7 +12,7 @@ public class SalmonGreenCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    SalmonGreenCC() {
+    public SalmonGreenCC() {
         super("salmongreen");
     }
 

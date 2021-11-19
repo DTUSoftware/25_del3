@@ -3,7 +3,7 @@ package dk.dtu.cdio3.objects;
 import com.google.common.io.Resources;
 import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.DeedManager;
-import dk.dtu.cdio3.objects.chancecards.ChanceCard;
+import dk.dtu.cdio3.objects.chancecards.*;
 import dk.dtu.cdio3.objects.fields.*;
 import gui_fields.GUI_Field;
 import org.json.JSONArray;
@@ -22,8 +22,10 @@ public class GameBoard {
     private HashMap<UUID, Field> fieldMap = new HashMap<>();
     private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
     private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
-    private ChanceCard[] chanceCards = new ChanceCard[] {};
-    private UUID jailField = null;
+    private final ChanceCard[] chanceCards = new ChanceCard[] {new BailCC(), new BirthdayCC(), new BoardWalkCC(),
+            new BrownRedCC(), new CarCC(), new DidHomeWorkCC(), new EatCandyCC(), new LightBlueCC(),
+            new LightblueYellowCC(), new MoveFieldsCC(), new MoveOrDrawCC(), new OrangeBlueCC(), new OrangeCC(),
+            new RedCC(), new SalmonGreenCC(), new ShipCC(), new SkateparkCC(), new StartCC()};
     private JSONObject gameBoardJSON;
 
     private void loadGameBoardConfig() {
@@ -98,7 +100,6 @@ public class GameBoard {
                     break;
                 case "JailField":
                     fields[i] = new JailField();
-                    jailField = fields[i].getID();
                     break;
                 case "BreakField":
                     fields[i] = new BreakField();
@@ -159,7 +160,10 @@ public class GameBoard {
                     return uuid;
                 }
             }
-            catch (Exception e) {}
+            catch (Exception e) {
+                System.out.println(e.toString());
+                return null;
+            }
         }
         return null;
     }

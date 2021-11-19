@@ -12,7 +12,7 @@ public class StartCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    StartCC() {
+    public StartCC() {
         super("start");
     }
 

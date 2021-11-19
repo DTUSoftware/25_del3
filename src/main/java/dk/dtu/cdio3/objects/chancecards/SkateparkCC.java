@@ -16,7 +16,7 @@ public class SkateparkCC extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    SkateparkCC() {
+    public SkateparkCC() {
         super("skatepark");
     }
 

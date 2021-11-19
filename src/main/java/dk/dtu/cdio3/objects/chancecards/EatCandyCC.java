@@ -11,8 +11,8 @@ import java.util.UUID;
  * BETAL 2000 til banken
  */
 public class EatCandyCC extends ChanceCard {
-    EatCandyCC(String cardName) {
-        super(cardName);
+    public EatCandyCC() {
+        super("eatcandy");
     }
 
     @Override

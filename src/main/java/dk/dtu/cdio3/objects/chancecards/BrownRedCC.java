@@ -12,7 +12,7 @@ public class BrownRedCC  extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    BrownRedCC(String cardName) {
+    public BrownRedCC() {
         super("brownred");
     }
 

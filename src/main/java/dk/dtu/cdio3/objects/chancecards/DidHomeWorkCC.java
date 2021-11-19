@@ -11,8 +11,8 @@ import java.util.UUID;
  */
 
 public class DidHomeWorkCC extends ChanceCard {
-    DidHomeWorkCC(String cardName) {
-        super(cardName);
+    public DidHomeWorkCC() {
+        super("didhomework");
     }
 
     @Override

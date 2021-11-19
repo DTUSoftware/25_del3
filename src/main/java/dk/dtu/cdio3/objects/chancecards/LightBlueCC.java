@@ -12,7 +12,7 @@ public class LightBlueCC  extends ChanceCard {
     /**
      * Initiates a new ChanceCard.
      */
-    LightBlueCC() {
+    public LightBlueCC() {
         super("lightblue");
     }
 

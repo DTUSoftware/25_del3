@@ -12,7 +12,7 @@ public class BailCC extends ChanceCard {
     /**
      * Initiates a new Bail ChanceCard.
      */
-    BailCC() {
+    public BailCC() {
         super("bail");
     }
 
