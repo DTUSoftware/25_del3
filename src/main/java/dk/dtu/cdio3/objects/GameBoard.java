@@ -19,15 +19,11 @@ public class GameBoard {
     private HashMap<UUID, Field> fieldMap = new HashMap<>();
     private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
     private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
-//    private final ChanceCard[] chanceCards = new ChanceCard[] {
-//            new BailCC(), new BirthdayCC(), new BoardWalkCC(), new BrownRedCC(), new CarCC(), new DidHomeWorkCC(),
-//            new EatCandyCC(), new LightBlueCC(), new LightblueYellowCC(), new MoveFieldsCC(), new MoveOrDrawCC(),
-//            new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(), new ShipCC(), new SkateparkCC(),
-//            new StartCC()
-//    };
-
     private final ChanceCard[] chanceCards = new ChanceCard[] {
-            new BoardWalkCC()
+            new BailCC(), new BirthdayCC(), new BoardWalkCC(), new BrownRedCC(), new CarCC(), new DidHomeWorkCC(),
+            new EatCandyCC(), new LightBlueCC(), new LightblueYellowCC(), new MoveFieldsCC(), new MoveOrDrawCC(),
+            new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(), new ShipCC(), new SkateparkCC(),
+            new StartCC()
     };
     private JSONObject gameBoardJSON;
     private Random rand = new Random();

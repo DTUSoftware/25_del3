@@ -19,6 +19,10 @@ public class BirthdayCC extends ChanceCard {
     public BirthdayCC() {
         super("birthday");
     }
+    public BirthdayCC(double birthdayWithdrawalAmount) {
+        super("birthday");
+        this.birthdayWithdrawalAmount = birthdayWithdrawalAmount;
+    }
 
     @Override
     public void doCardAction(UUID playerID) {
