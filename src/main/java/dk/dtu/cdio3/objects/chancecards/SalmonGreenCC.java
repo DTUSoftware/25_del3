@@ -8,7 +8,14 @@ import java.util.UUID;
  * Ellers skal du BETALE leje til ejeren.
  */
 
-public class SalmonGreenCC  extends ChanceCard {
+public class SalmonGreenCC extends ChanceCard {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    SalmonGreenCC() {
+        super("salmongreen");
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 

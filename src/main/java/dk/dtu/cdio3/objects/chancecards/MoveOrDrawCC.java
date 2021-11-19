@@ -9,6 +9,13 @@ import java.util.UUID;
  */
 
 public class MoveOrDrawCC  extends ChanceCard {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    MoveOrDrawCC() {
+        super("moveordraw");
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 

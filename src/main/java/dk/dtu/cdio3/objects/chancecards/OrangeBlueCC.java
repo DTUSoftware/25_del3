@@ -9,6 +9,13 @@ import java.util.UUID;
  */
 
 public class OrangeBlueCC  extends ChanceCard {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    OrangeBlueCC() {
+        super("orangeblue");
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 

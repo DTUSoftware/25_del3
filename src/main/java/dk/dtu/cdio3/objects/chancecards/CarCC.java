@@ -9,6 +9,13 @@ import java.util.UUID;
  */
 
 public class CarCC extends ChanceCard {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    CarCC() {
+        super("car");
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 

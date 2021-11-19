@@ -8,8 +8,15 @@ import java.util.UUID;
  */
 
 public class BoardWalkCC extends ChanceCard {
-        @Override
-        public void doCardAction(UUID playerID) {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    BoardWalkCC() {
+        super("boardwalk");
+    }
 
-        }
-        }
+    @Override
+    public void doCardAction(UUID playerID) {
+
+    }
+}

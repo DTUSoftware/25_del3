@@ -3,6 +3,7 @@ package dk.dtu.cdio3.objects;
 import com.google.common.io.Resources;
 import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.DeedManager;
+import dk.dtu.cdio3.objects.chancecards.ChanceCard;
 import dk.dtu.cdio3.objects.fields.*;
 import gui_fields.GUI_Field;
 import org.json.JSONArray;
@@ -21,6 +22,7 @@ public class GameBoard {
     private HashMap<UUID, Field> fieldMap = new HashMap<>();
     private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
     private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
+    private ChanceCard[] chanceCards = new ChanceCard[] {};
     private UUID jailField = null;
     private JSONObject gameBoardJSON;
 
@@ -150,7 +152,15 @@ public class GameBoard {
         return fieldPositions.get(fieldID);
     }
 
-    public UUID getJailField() {
-        return jailField;
+    public UUID getFieldIDFromType(String fieldClassName) {
+        for (UUID uuid : fieldMap.keySet()) {
+            try {
+                if (Class.forName("dk.dtu.cdio3.objects.fields."+fieldClassName).isInstance(fieldMap.get(uuid))) {
+                    return uuid;
+                }
+            }
+            catch (Exception e) {}
+        }
+        return null;
     }
 }

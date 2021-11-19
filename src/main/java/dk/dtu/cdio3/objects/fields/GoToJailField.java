@@ -4,8 +4,6 @@ import dk.dtu.cdio3.managers.GUIManager;
 import dk.dtu.cdio3.managers.GameManager;
 import dk.dtu.cdio3.managers.LanguageManager;
 import dk.dtu.cdio3.managers.PlayerManager;
-import gui_fields.GUI_Jail;
-import gui_fields.GUI_Ownable;
 
 import java.awt.*;
 import java.util.UUID;
@@ -20,7 +18,7 @@ public class GoToJailField extends Field {
         // Move the player to jail
         GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("go_to_jail_message"));
         PlayerManager.getInstance().getPlayer(playerID).jail();
-        GameManager.getInstance().setPlayerBoardPosition(playerID, GameManager.getInstance().getGameBoard().getFieldPosition(GameManager.getInstance().getGameBoard().getJailField()), false);
+        GameManager.getInstance().setPlayerBoardPosition(playerID, GameManager.getInstance().getGameBoard().getFieldPosition(GameManager.getInstance().getGameBoard().getFieldIDFromType("JailField")), false);
     }
 
     @Override

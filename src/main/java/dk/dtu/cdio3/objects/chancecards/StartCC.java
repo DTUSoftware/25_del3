@@ -8,7 +8,14 @@ import java.util.UUID;
  * Modtag M2
  */
 
-public class StartCC  extends ChanceCard {
+public class StartCC extends ChanceCard {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    StartCC() {
+        super("start");
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 

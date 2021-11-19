@@ -12,7 +12,14 @@ import java.util.UUID;
  * leje til ejeren
  */
 
-public class SkateparkCC  extends ChanceCard {
+public class SkateparkCC extends ChanceCard {
+    /**
+     * Initiates a new ChanceCard.
+     */
+    SkateparkCC() {
+        super("skatepark");
+    }
+
     @Override
     public void doCardAction(UUID playerID) {
 
