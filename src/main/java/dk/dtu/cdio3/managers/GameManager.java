@@ -165,6 +165,8 @@ public class GameManager {
         field.doLandingAction(playerID);
     }
 
+    // TODO: method to move to a field
+
     public int getPlayerPosition(UUID playerID) {
         return playerPositions.get(playerID);
     }
