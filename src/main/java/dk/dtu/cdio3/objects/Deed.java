@@ -7,7 +7,7 @@ import dk.dtu.cdio3.managers.PlayerManager;
 import java.util.UUID;
 
 public class Deed {
-    private UUID deedID;
+    private final UUID deedID;
     private double price = 0.0;
     private double rent = 0.0;
     private double groupRent = 0.0;

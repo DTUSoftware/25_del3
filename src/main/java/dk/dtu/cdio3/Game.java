@@ -45,6 +45,7 @@ public class Game {
         }
         while (GUIManager.getInstance().askPrompt(LanguageManager.getInstance().getString("play_again")));
 
+        gm.closeGUI();
     }
 
     public static void setStartPassReward(double startPassReward) {

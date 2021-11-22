@@ -69,7 +69,7 @@ public class GameManager {
             playerQueue.addLast(currentPlayer);
         }
 
-        // find out who won
+        // find out which player won
         UUID maxPlayer = null;
         UUID otherPlayer = null;
         double maxValue = 0.0;

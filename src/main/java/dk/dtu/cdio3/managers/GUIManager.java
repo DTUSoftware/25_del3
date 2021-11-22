@@ -3,7 +3,6 @@ package dk.dtu.cdio3.managers;
 import dk.dtu.cdio3.objects.fields.Field;
 import gui_fields.GUI_Car;
 import gui_fields.GUI_Field;
-import gui_fields.GUI_Jail;
 import gui_fields.GUI_Player;
 import gui_main.GUI;
 

@@ -14,8 +14,8 @@ public class GUIJailField extends GUI_Field {
     private static final int TOPHEIGHT = 47;
     private static final int SUBTEXTHEIGHT = 14;
     private ImageIcon icon;
-    private JLabel topLabel;
-    private SwingComponentFactory factory = new SwingComponentFactory();
+    private final JLabel topLabel;
+    private final SwingComponentFactory factory = new SwingComponentFactory();
     private static int picCounter = 0;
 
     public GUIJailField(){
