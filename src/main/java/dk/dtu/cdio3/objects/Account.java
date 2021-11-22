@@ -6,7 +6,7 @@ import java.util.UUID;
  * The Account class, typically a Player has an instance of this class.
  */
 public class Account {
-    private UUID accountID;
+    private final UUID accountID;
     private double balance = 0.0;
 
     public Account() {
@@ -60,7 +60,7 @@ public class Account {
      *                  <code>false</code> if the amount didn't have a sufficient balance.
      */
     public boolean withdraw(double amount) {
-        return doAccountWithdraw(amount);
+        return doAccountWithdraw(-amount);
     }
 
     /**

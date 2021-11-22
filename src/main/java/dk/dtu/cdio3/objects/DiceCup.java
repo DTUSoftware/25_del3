@@ -10,7 +10,7 @@ package dk.dtu.cdio3.objects;
  * Note: from cdio2, though improved
  */
 public class DiceCup {
-    private Die[] dice = new Die[2];
+    private final Die[] dice = new Die[2];
 
     /**
      * Constructer function DiceCup

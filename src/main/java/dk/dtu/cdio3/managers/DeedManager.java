@@ -14,10 +14,10 @@ import java.util.UUID;
 public class DeedManager {
     private static DeedManager deedManager;
 
-    private HashMap<UUID, Deed> deedMap = new HashMap<>();
-    private BiMap<UUID, UUID> deeds = HashBiMap.create();
-    private HashMap<UUID, UUID> deedOwnership = new HashMap<>();
-    private HashMap<Color, UUID[]> deedGroups = new HashMap<>();
+    private final HashMap<UUID, Deed> deedMap = new HashMap<>();
+    private final BiMap<UUID, UUID> deeds = HashBiMap.create();
+    private final HashMap<UUID, UUID> deedOwnership = new HashMap<>();
+    private final HashMap<Color, UUID[]> deedGroups = new HashMap<>();
 
     private DeedManager() {
 
@@ -63,6 +63,12 @@ public class DeedManager {
             }
         }
         return playerDeeds.toArray(new UUID[0]);
+    }
+
+    public void updatePlayerDeedPrices(UUID playerID) {
+        for (UUID deedID : getPlayerDeeds(playerID)) {
+            ((PropertyField) GameManager.getInstance().getGameBoard().getFieldFromID(getFieldID(deedID))).updatePrices(deedID);
+        }
     }
 
     public UUID getDeedID(UUID fieldID) {

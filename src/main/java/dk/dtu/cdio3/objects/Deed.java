@@ -2,11 +2,12 @@ package dk.dtu.cdio3.objects;
 
 import dk.dtu.cdio3.managers.DeedManager;
 import dk.dtu.cdio3.managers.GameManager;
+import dk.dtu.cdio3.managers.PlayerManager;
 
 import java.util.UUID;
 
 public class Deed {
-    private UUID deedID;
+    private final UUID deedID;
     private double price = 0.0;
     private double rent = 0.0;
     private double groupRent = 0.0;
@@ -61,7 +62,7 @@ public class Deed {
         return this.groupRent;
     }
 
-    public void payRent(Player player) {
-
+    public boolean payRent(UUID playerID) {
+        return PlayerManager.getInstance().getPlayer(playerID).withdraw(getCurrentRent());
     }
 }

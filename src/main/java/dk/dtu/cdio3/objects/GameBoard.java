@@ -3,6 +3,8 @@ package dk.dtu.cdio3.objects;
 import com.google.common.io.Resources;
 import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.DeedManager;
+import dk.dtu.cdio3.managers.GameManager;
+import dk.dtu.cdio3.objects.chancecards.*;
 import dk.dtu.cdio3.objects.fields.*;
 import gui_fields.GUI_Field;
 import org.json.JSONArray;
@@ -11,18 +13,24 @@ import org.json.JSONObject;
 import java.awt.*;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.UUID;
+import java.util.*;
 
 public class GameBoard {
     private final Field[] fields;
-    private HashMap<UUID, Field> fieldMap = new HashMap<>();
-    private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
-    private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
-    private UUID jailField = null;
+    private final HashMap<UUID, Field> fieldMap = new HashMap<>();
+    private final HashMap<UUID, Integer> fieldPositions = new HashMap<>();
+    private final HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
+    private final ChanceCard[] chanceCards = new ChanceCard[] {
+    /* Bail */          new BailCC(),
+    /* Give & Take */   new BirthdayCC(), new DidHomeWorkCC(), new EatCandyCC(),
+    /* Move to field */ new BoardWalkCC(), new SkateparkCC(), new StartCC(),
+    /* Move to color */ new BrownRedCC(), new LightBlueCC(), new LightblueYellowCC(), new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(),
+//    /* Move to free */  // new CarCC(), new ShipCC(),
+    /* Special */       new MoveFieldsCC(), new MoveOrDrawCC(),
+    };
+
     private JSONObject gameBoardJSON;
+    private final Random rand = new Random();
 
     private void loadGameBoardConfig() {
         try {
@@ -96,7 +104,6 @@ public class GameBoard {
                     break;
                 case "JailField":
                     fields[i] = new JailField();
-                    jailField = fields[i].getID();
                     break;
                 case "BreakField":
                     fields[i] = new BreakField();
@@ -111,7 +118,7 @@ public class GameBoard {
 
             Field field = fields[i];
             fieldMap.put(field.getID(), fields[i]);
-            guiFields.put(field.getID(), field.getGUIStreet());
+            guiFields.put(field.getID(), field.getGUIField());
             fieldPositions.put(field.getID(), i);
         }
 
@@ -150,7 +157,57 @@ public class GameBoard {
         return fieldPositions.get(fieldID);
     }
 
-    public UUID getJailField() {
-        return jailField;
+    /**
+     * Gets a random chance card.
+     *
+     * @return  The randomly picked chance card.
+     */
+    public ChanceCard getChanceCard() {
+        return chanceCards[rand.nextInt(chanceCards.length)];
+    }
+
+    /**
+     * Gets the next field with one of the given colors, from the position of given player.
+     *
+     * @param playerID  Player to find next field from.
+     * @param colors    Colors to check for.
+     * @return          The UUID of the found field.
+     */
+    public UUID getNextFieldIDWithColor(UUID playerID, Color[] colors) {
+        int playerPosition = GameManager.getInstance().getPlayerPosition(playerID);
+        Field foundField = null;
+        for (int currentField = playerPosition+1; currentField < playerPosition+getFieldAmount(); currentField++) {
+            Field field = getField(currentField % getFieldAmount());
+            for (Color color : colors) {
+                System.out.println("FieldColor: " + field.getFieldColor());
+                System.out.println("CheckColor: " + color);
+                if (field.getFieldColor().equals(color)) {
+                    foundField = field;
+                    break;
+                }
+            }
+            if (foundField != null) { break; }
+        }
+        if (foundField != null) {
+            return foundField.getID();
+        }
+        return null;
+    }
+
+    public UUID getFieldIDFromType(String fieldName) {
+        for (UUID uuid : fieldMap.keySet()) {
+            try {
+                if (Class.forName("dk.dtu.cdio3.objects.fields."+fieldName).isInstance(fieldMap.get(uuid))) {
+                    return uuid;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("Could not find fieldName in Field Class names: " + e.toString());
+            }
+            if (fieldMap.get(uuid).getFieldName().equals(fieldName)) {
+                return uuid;
+            }
+        }
+        return null;
     }
 }

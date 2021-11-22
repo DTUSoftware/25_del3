@@ -9,8 +9,8 @@ import java.util.UUID;
 public class PlayerManager {
     private static PlayerManager playerManager;
 
-    private HashMap<UUID, Player> players = new HashMap<>();
-    private HashMap<UUID, GUI_Player> guiPlayers = new HashMap<>();
+    private final HashMap<UUID, Player> players = new HashMap<>();
+    private final HashMap<UUID, GUI_Player> guiPlayers = new HashMap<>();
 
     private PlayerManager() {}
 

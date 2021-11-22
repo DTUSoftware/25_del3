@@ -8,6 +8,8 @@ public class Player {
     private final String name;
     private final UUID playerID;
     private final Account account;
+    private int bailCards = 0;
+    private boolean jailed = false;
 
     public Player(String name) {
         this.name = name;
@@ -52,6 +54,34 @@ public class Player {
         if (guiInitialized()) {
             GUIManager.getInstance().setPlayerBalance(playerID, getBalance());
         }
+    }
+
+    private void setJailed(boolean jailed) {
+        this.jailed = jailed;
+    }
+
+    public void jail() {
+        setJailed(true);
+    }
+
+    public void unJail() {
+        setJailed(false);
+    }
+
+    public boolean isJailed() {
+        return jailed;
+    }
+
+    public void giveBailCard() {
+        this.bailCards++;
+    }
+
+    public boolean takeBailCard() {
+        if (this.bailCards > 0) {
+            this.bailCards--;
+            return true;
+        }
+        return false;
     }
 
     public double getBalance() {

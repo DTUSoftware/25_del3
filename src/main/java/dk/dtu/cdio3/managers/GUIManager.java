@@ -93,9 +93,6 @@ public class GUIManager {
 
     /**
      * Helper function to ask for Language.
-     *
-     * @return <code>true</code> if the player(s) choose
-     * English, for Danish <code>false</code>.
      */
     public void askLanguage() {
         HashMap<String, Locale> localeMap = LanguageManager.getInstance().getLocalesMap();
@@ -103,6 +100,7 @@ public class GUIManager {
         if (localeMap.isEmpty()) {
             return;
         }
+
         String language = gui.getUserSelection("Choose a language", localeMap.keySet().toArray(new String[0]));
 
         Locale locale = localeMap.get(language);
@@ -117,8 +115,38 @@ public class GUIManager {
      */
     public int askPlayers() {
         String[] playerammountlist = {"2", "3", "4"};
-        String player_Ammount = gui.getUserSelection("Choose ammount of players", playerammountlist);
+        String player_Ammount = gui.getUserSelection(LanguageManager.getInstance().getString("choose_player_amount"), playerammountlist);
         return Integer.parseInt(player_Ammount);
+    }
+
+    /**
+     * Asks the player to pick a number between min and max.
+     *
+     * @return The number the player chose.
+     */
+    public int askNumber(int min, int max) {
+        String[] numbers = new String[max+1-min];
+        for (int i = min; i < numbers.length; i++) {
+            numbers[i] = Integer.toString(i);
+        }
+        String number = gui.getUserSelection(LanguageManager.getInstance().getString("choose_a_number"), numbers);
+        return Integer.parseInt(number);
+    }
+
+    /**
+     * Asks the player which car type they want.
+     *
+     * @return The GUI_Car.Type that the player chose.
+     */
+    public GUI_Car.Type askCarType() {
+        String[] carTypes = Arrays.stream(GUI_Car.Type.class.getEnumConstants()).map(Enum::name).toArray(String[]::new); // https://stackoverflow.com/a/13783744/12418245
+        for (int i = 0; i < carTypes.length; i++) {
+            if (!carTypes[i].equals("UFO")) {
+                carTypes[i] = carTypes[i].substring(0,1).toUpperCase() + carTypes[i].substring(1).toLowerCase();
+            }
+        }
+        String carType = gui.getUserSelection(LanguageManager.getInstance().getString("choose_player_car"), carTypes);
+        return GUI_Car.Type.getTypeFromString(carType.toUpperCase());
     }
 
     /**
@@ -135,12 +163,9 @@ public class GUIManager {
     /**
      * Function to wait for the user to roll their dice (clicking
      * a button). The loop won't continue before they click.
-     *
-     * @param playerName The name of a player who has
-     *                   to roll the dice now.
      */
-    public void waitUserRoll(String playerName) {
-        gui.showMessage(LanguageManager.getInstance().getString("player_turn").replace("{player_name}", playerName));
+    public void waitUserRoll() {
+        gui.showMessage(LanguageManager.getInstance().getString("click_to_roll"));
     }
 
     /**
@@ -153,7 +178,8 @@ public class GUIManager {
      * player in question.
      */
     public GUI_Player createGUIPlayer(String playerName, double startingBalance) {
-        GUI_Car car = new GUI_Car();
+        GUI_Car.Type carType = askCarType();
+        GUI_Car car = new GUI_Car((Color)null, (Color)null, carType, GUI_Car.Pattern.FILL);
 
         GUI_Player player = new GUI_Player(playerName, (int) startingBalance, car); // the GUI takes int, so typecast
 
@@ -177,7 +203,7 @@ public class GUIManager {
         Field field = GameManager.getInstance().getGameBoard().getField(fieldNumber);
         assert (field != null);
 
-        player.getCar().setPosition(field.getGUIStreet());
+        player.getCar().setPosition(field.getGUIField());
         return field;
     }
 
@@ -192,6 +218,19 @@ public class GUIManager {
         assert (player != null);
 
         player.setBalance((int) balance); // The GUI only accepts integers, so typecasting
+    }
+
+    /**
+     * Shows a chance card with the given text, and stops taking control of thread when user clicks ok.
+     *
+     * @param cardText  The text of the chance card.
+     */
+    public void showChanceCard(String cardText) {
+        gui.setChanceCard(cardText);
+        gui.displayChanceCard();
+        showMessage(LanguageManager.getInstance().getString("got_a_chance_card"));
+        gui.displayChanceCard();
+        gui.setChanceCard(LanguageManager.getInstance().getString("no_chance_card"));
     }
 }
 
