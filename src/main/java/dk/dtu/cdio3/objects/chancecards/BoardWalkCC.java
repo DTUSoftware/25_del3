@@ -23,6 +23,7 @@ public class BoardWalkCC extends ChanceCard {
         UUID boardWalk = GameManager.getInstance().getGameBoard().getFieldIDFromType("boardwalk");
         if (boardWalk == null) {
             GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("error_string"));
+            System.out.println("Field ID is null!");
             return;
         }
 

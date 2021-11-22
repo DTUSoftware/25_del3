@@ -1,5 +1,8 @@
 package dk.dtu.cdio3.objects.chancecards;
 
+import dk.dtu.cdio3.managers.GUIManager;
+import dk.dtu.cdio3.managers.GameManager;
+
 import java.util.UUID;
 
 /**
@@ -18,6 +21,8 @@ public class MoveFieldsCC  extends ChanceCard {
 
     @Override
     public void doCardAction(UUID playerID) {
-
+        int moveAmount = GUIManager.getInstance().askNumber(1, 5);
+        GameManager gm = GameManager.getInstance();
+        gm.setPlayerBoardPosition(playerID, (gm.getPlayerPosition(playerID)+moveAmount) % gm.getGameBoard().getFieldAmount(), true);
     }
 }

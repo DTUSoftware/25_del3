@@ -3,6 +3,7 @@ package dk.dtu.cdio3.objects;
 import com.google.common.io.Resources;
 import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.DeedManager;
+import dk.dtu.cdio3.managers.GameManager;
 import dk.dtu.cdio3.objects.chancecards.*;
 import dk.dtu.cdio3.objects.fields.*;
 import gui_fields.GUI_Field;
@@ -23,9 +24,9 @@ public class GameBoard {
     /* Bail */          new BailCC(),
     /* Give & Take */   new BirthdayCC(), new DidHomeWorkCC(), new EatCandyCC(),
     /* Move to field */ new BoardWalkCC(), new SkateparkCC(), new StartCC(),
-    /* Move to color */ // new BrownRedCC(), new LightBlueCC(), new LightblueYellowCC(), new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(),
+    /* Move to color */ new BrownRedCC(), new LightBlueCC(), new LightblueYellowCC(), new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(),
     /* Move to free */  // new CarCC(), new ShipCC(),
-    /* Special */       // new MoveFieldsCC(), new MoveOrDrawCC(),
+    /* Special */       new MoveFieldsCC(), new MoveOrDrawCC(),
     };
 
     private JSONObject gameBoardJSON;
@@ -163,6 +164,34 @@ public class GameBoard {
      */
     public ChanceCard getChanceCard() {
         return chanceCards[rand.nextInt(chanceCards.length)];
+    }
+
+    /**
+     * Gets the next field with one of the given colors, from the position of given player.
+     *
+     * @param playerID  Player to find next field from.
+     * @param colors    Colors to check for.
+     * @return          The UUID of the found field.
+     */
+    public UUID getNextFieldIDWithColor(UUID playerID, Color[] colors) {
+        int playerPosition = GameManager.getInstance().getPlayerPosition(playerID);
+        Field foundField = null;
+        for (int currentField = playerPosition+1; currentField < playerPosition+getFieldAmount(); currentField++) {
+            Field field = getField(currentField % getFieldAmount());
+            for (Color color : colors) {
+                System.out.println("FieldColor: " + field.getFieldColor());
+                System.out.println("CheckColor: " + color);
+                if (field.getFieldColor().equals(color)) {
+                    foundField = field;
+                    break;
+                }
+            }
+            if (foundField != null) { break; };
+        }
+        if (foundField != null) {
+            return foundField.getID();
+        }
+        return null;
     }
 
     public UUID getFieldIDFromType(String fieldName) {

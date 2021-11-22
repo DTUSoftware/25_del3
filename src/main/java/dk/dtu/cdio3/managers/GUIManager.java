@@ -121,6 +121,20 @@ public class GUIManager {
     }
 
     /**
+     * Asks the player to pick a number between min and max.
+     *
+     * @return The number the player chose.
+     */
+    public int askNumber(int min, int max) {
+        String[] numbers = new String[max+1-min];
+        for (int i = min; i < numbers.length; i++) {
+            numbers[i] = Integer.toString(i);
+        }
+        String number = gui.getUserSelection(LanguageManager.getInstance().getString("choose_a_number"), numbers);
+        return Integer.parseInt(number);
+    }
+
+    /**
      * Asks the player which car type they want.
      *
      * @return The GUI_Car.Type that the player chose.
