@@ -25,7 +25,7 @@ public class GameBoard {
     /* Give & Take */   new BirthdayCC(), new DidHomeWorkCC(), new EatCandyCC(),
     /* Move to field */ new BoardWalkCC(), new SkateparkCC(), new StartCC(),
     /* Move to color */ new BrownRedCC(), new LightBlueCC(), new LightblueYellowCC(), new OrangeBlueCC(), new OrangeCC(), new RedCC(), new SalmonGreenCC(),
-    /* Move to free */  // new CarCC(), new ShipCC(),
+//    /* Move to free */  // new CarCC(), new ShipCC(),
     /* Special */       new MoveFieldsCC(), new MoveOrDrawCC(),
     };
 
@@ -200,20 +200,12 @@ public class GameBoard {
                 if (Class.forName("dk.dtu.cdio3.objects.fields."+fieldName).isInstance(fieldMap.get(uuid))) {
                     return uuid;
                 }
-
             }
             catch (Exception e) {
                 System.out.println("Could not find fieldName in Field Class names: " + e.toString());
             }
-
-            try {
-                if (Class.forName("dk.dtu.cdio3.objects.fields.PropertyField").isInstance(fieldMap.get(uuid)) &&
-                        fieldMap.get(uuid).getFieldName().equals(fieldName)) {
-                    return uuid;
-                }
-            }
-            catch (Exception e) {
-                System.out.println("Field was not a property field: " + e.toString());
+            if (fieldMap.get(uuid).getFieldName().equals(fieldName)) {
+                return uuid;
             }
         }
         return null;
