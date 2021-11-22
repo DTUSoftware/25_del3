@@ -196,17 +196,19 @@ public class GameManager {
 
     public void setPlayerPosition(UUID playerID, int playerPosition, boolean buyForFree) {
         playerPositions.put(playerID, playerPosition);
-        Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());
-        if (buyForFree) {
-            if (field instanceof PropertyField) {
-                ((PropertyField) field).doLandingAction(playerID, true);
+        if (GUIManager.getInstance().guiInitialized()) {
+            Field field = GUIManager.getInstance().movePlayerField(playerID, playerPositions.get(playerID)%gameBoard.getFieldAmount());
+            if (buyForFree) {
+                if (field instanceof PropertyField) {
+                    ((PropertyField) field).doLandingAction(playerID, true);
+                }
+                else {
+                    field.doLandingAction(playerID);
+                }
             }
             else {
                 field.doLandingAction(playerID);
             }
-        }
-        else {
-            field.doLandingAction(playerID);
         }
     }
 }

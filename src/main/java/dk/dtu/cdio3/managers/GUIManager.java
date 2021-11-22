@@ -43,6 +43,10 @@ public class GUIManager {
         gui.setDice(6, 6);
     }
 
+    public boolean guiInitialized() {
+        return (gui != null);
+    }
+
     public static GUIManager getInstance() {
         if (guiManager == null) {
             guiManager = new GUIManager();

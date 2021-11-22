@@ -23,8 +23,8 @@ public class Player {
         this.account = new Account(startingBalance);
     }
 
-    public static boolean guiInitialized() {
-        return GUIManager.getInstance() != null;
+    private boolean guiInitialized() {
+        return GUIManager.getInstance().guiInitialized();
     }
 
     public String getName() {
