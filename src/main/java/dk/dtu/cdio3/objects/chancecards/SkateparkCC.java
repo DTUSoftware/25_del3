@@ -35,6 +35,7 @@ public class SkateparkCC extends ChanceCard {
         GameManager.getInstance().setPlayerBoardPosition(
                 playerID,
                 GameManager.getInstance().getGameBoard().getFieldPosition(skate_park),
+                true,
                 true
         );
 
