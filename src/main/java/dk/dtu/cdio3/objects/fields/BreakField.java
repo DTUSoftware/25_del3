@@ -1,7 +1,6 @@
 package dk.dtu.cdio3.objects.fields;
 
 import dk.dtu.cdio3.managers.LanguageManager;
-import gui_fields.GUI_Ownable;
 
 import java.awt.*;
 import java.util.UUID;

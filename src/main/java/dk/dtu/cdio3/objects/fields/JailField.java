@@ -15,6 +15,10 @@ public class JailField extends Field {
     public JailField() {
         super(Color.ORANGE, "jail", true);
     }
+    public JailField(double jailBailOut) {
+        super(Color.ORANGE, "jail", true);
+        this.jailBailOut = jailBailOut;
+    }
 
     @Override
     public void doLandingAction(UUID playerID) {
@@ -33,11 +37,13 @@ public class JailField extends Field {
             // if the player has a bail card
             if (player.takeBailCard()) {
                 GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("card_bailout"));
+                player.unJail();
             }
             else {
                 // if the player can pay bailout fees
                 if (player.withdraw(jailBailOut)) {
                     GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("paid_bailout").replace("{amount}", Float.toString(Math.round(jailBailOut))));
+                    player.unJail();
                 }
                 else {
                     GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("could_not_pay_bailout"));

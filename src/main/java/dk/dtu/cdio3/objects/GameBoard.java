@@ -17,9 +17,9 @@ import java.util.*;
 
 public class GameBoard {
     private final Field[] fields;
-    private HashMap<UUID, Field> fieldMap = new HashMap<>();
-    private HashMap<UUID, Integer> fieldPositions = new HashMap<>();
-    private HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
+    private final HashMap<UUID, Field> fieldMap = new HashMap<>();
+    private final HashMap<UUID, Integer> fieldPositions = new HashMap<>();
+    private final HashMap<UUID, GUI_Field> guiFields = new LinkedHashMap<>();
     private final ChanceCard[] chanceCards = new ChanceCard[] {
     /* Bail */          new BailCC(),
     /* Give & Take */   new BirthdayCC(), new DidHomeWorkCC(), new EatCandyCC(),
@@ -30,7 +30,7 @@ public class GameBoard {
     };
 
     private JSONObject gameBoardJSON;
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     private void loadGameBoardConfig() {
         try {
@@ -186,7 +186,7 @@ public class GameBoard {
                     break;
                 }
             }
-            if (foundField != null) { break; };
+            if (foundField != null) { break; }
         }
         if (foundField != null) {
             return foundField.getID();

@@ -1,6 +1,5 @@
 package dk.dtu.cdio3.managers;
 
-import com.google.common.io.Resources;
 import dk.dtu.cdio3.Game;
 
 import java.net.URL;

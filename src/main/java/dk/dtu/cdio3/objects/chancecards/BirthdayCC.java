@@ -1,6 +1,5 @@
 package dk.dtu.cdio3.objects.chancecards;
 
-import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.GUIManager;
 import dk.dtu.cdio3.managers.GameManager;
 import dk.dtu.cdio3.managers.LanguageManager;
