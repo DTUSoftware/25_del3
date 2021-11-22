@@ -27,7 +27,10 @@ public class PlayerManager {
         UUID playerID = player.getID();
         players.put(playerID, player);
 
-        GUI_Player guiPlayer = GUIManager.getInstance().createGUIPlayer(player.getName(), player.getBalance());
+        GUI_Player guiPlayer = null;
+        if (GUIManager.getInstance().guiInitialized()) {
+            guiPlayer = GUIManager.getInstance().createGUIPlayer(player.getName(), player.getBalance());
+        }
         guiPlayers.put(playerID, guiPlayer);
 
         return player;
@@ -38,7 +41,10 @@ public class PlayerManager {
         UUID playerID = player.getID();
         players.put(playerID, player);
 
-        GUI_Player guiPlayer = GUIManager.getInstance().createGUIPlayer(player.getName(), player.getBalance());
+        GUI_Player guiPlayer = null;
+        if (GUIManager.getInstance().guiInitialized()) {
+            guiPlayer = GUIManager.getInstance().createGUIPlayer(player.getName(), player.getBalance());
+        }
         guiPlayers.put(playerID, guiPlayer);
 
         return player;
