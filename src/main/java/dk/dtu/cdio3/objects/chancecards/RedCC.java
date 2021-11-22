@@ -19,7 +19,7 @@ public class RedCC extends ChanceCard {
      * Initiates a new ChanceCard.
      */
     public RedCC() {
-        super("red");
+        super("_chancecard_messagered");
     }
 
     @Override
