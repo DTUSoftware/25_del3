@@ -6,7 +6,7 @@ import java.util.UUID;
  * The Account class, typically a Player has an instance of this class.
  */
 public class Account {
-    private UUID accountID;
+    private final UUID accountID;
     private double balance = 0.0;
 
     public Account() {

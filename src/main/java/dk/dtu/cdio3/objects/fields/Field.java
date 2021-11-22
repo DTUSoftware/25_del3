@@ -2,20 +2,19 @@ package dk.dtu.cdio3.objects.fields;
 
 import dk.dtu.cdio3.Game;
 import dk.dtu.cdio3.managers.LanguageManager;
-import dk.dtu.cdio3.objects.Player;
-import gui_fields.*;
-import gui_resources.Attrs;
+import gui_fields.GUI_Chance;
+import gui_fields.GUI_Field;
+import gui_fields.GUI_Start;
+import gui_fields.GUI_Street;
 
-import javax.swing.*;
 import java.awt.*;
-import java.net.URL;
 import java.util.UUID;
 
 public abstract class Field {
-    private UUID fieldID;
-    private String fieldName;
-    private Color fieldColor;
-    private GUI_Field guiField;
+    private final UUID fieldID;
+    private final String fieldName;
+    private final Color fieldColor;
+    private final GUI_Field guiField;
 
     Field(Color fieldColor, String fieldName, boolean description) {
         fieldID = UUID.randomUUID();
