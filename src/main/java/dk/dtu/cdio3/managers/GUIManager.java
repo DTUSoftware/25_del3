@@ -130,8 +130,8 @@ public class GUIManager {
      */
     public int askNumber(int min, int max) {
         String[] numbers = new String[max+1-min];
-        for (int i = min; i < numbers.length; i++) {
-            numbers[i] = Integer.toString(i);
+        for (int i = min; i <= numbers.length; i++) {
+            numbers[i-1] = Integer.toString(i);
         }
         String number = gui.getUserSelection(LanguageManager.getInstance().getString("choose_a_number"), numbers);
         return Integer.parseInt(number);
