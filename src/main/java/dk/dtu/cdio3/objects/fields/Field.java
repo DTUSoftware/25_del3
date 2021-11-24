@@ -11,12 +11,26 @@ import gui_fields.GUI_Street;
 import java.awt.*;
 import java.util.UUID;
 
+/**
+ * The field class is an abstract class to provide a structure for creating more fields on the board.
+ * <br><br>
+ * Provides three abstract functions:<br>
+ * - doLandingAction(), doLeavingAction() & reloadAction()
+ */
 public abstract class Field {
     private final UUID fieldID;
     private final String fieldName;
     private final Color fieldColor;
     private final GUI_Field guiField;
 
+    /**
+     * Creates a field, and sets up its respective field on the GUI.
+     *
+     * @param fieldColor    The color of the field.
+     * @param fieldName     The name of the field (this is the programmatically correct name,
+     *                      not user understandable name).
+     * @param description   Whether to show the fields' description.
+     */
     Field(Color fieldColor, String fieldName, boolean description) {
         fieldID = UUID.randomUUID();
         this.fieldName = fieldName;
@@ -48,10 +62,21 @@ public abstract class Field {
         }
     }
 
+    /**
+     * An action that is performed whenever the player lands on the field.
+     * @param playerID  The UUID of the player.
+     */
     public abstract void doLandingAction(UUID playerID);
 
+    /**
+     * An action that is performed whenever the player is about to leave the field.
+     * @param playerID  The UUID of the player.
+     */
     public abstract void doLeavingAction(UUID playerID);
 
+    /**
+     * Reloads the language on the field with the current language chosen in the LanguageManager.
+     */
     public abstract void reloadLanguage();
 
     public UUID getID() {

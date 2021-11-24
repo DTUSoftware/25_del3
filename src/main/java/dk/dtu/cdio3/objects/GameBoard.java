@@ -15,6 +15,9 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * The GameBoard keeps track of the fields, their positions on the board, as well as the chancecards on the board.
+ */
 public class GameBoard {
     private final Field[] fields;
     private final HashMap<UUID, Field> fieldMap = new HashMap<>();
@@ -32,6 +35,9 @@ public class GameBoard {
     private JSONObject gameBoardJSON;
     private final Random rand = new Random();
 
+    /**
+     * Loads the board with the fields from the JSON-configuration file that is in the resources folder of the project.
+     */
     private void loadGameBoardConfig() {
         try {
 //            URL gameBoardConfigURL = Game.class.getClassLoader().getResource("GameBoard.json");
@@ -61,6 +67,10 @@ public class GameBoard {
         return color;
     }
 
+    /**
+     * Creates a new gameboard with fields, which is mainly just loading and parsing the fields from the configuration
+     * file into proper game field objects, based on their types and given information.
+     */
     public GameBoard() {
         loadGameBoardConfig();
 
@@ -137,14 +147,28 @@ public class GameBoard {
         }
     }
 
+    /**
+     * Gets the amount of fields on the board.
+     *
+     * @return  The amount of fields.
+     */
     public int getFieldAmount() {
         return fields.length;
     }
 
+    /**
+     * Gets a field based on its position on the board.
+     * @param fieldPosition The position of the field on the board.
+     * @return              The field.
+     */
     public Field getField(int fieldPosition) {
         return fields[fieldPosition];
     }
 
+    /**
+     * Returns a string with all the fields and their information, including their UUID and their deed information.
+     * @return  A string with the fields on the board.
+     */
     public String fieldsToString() {
         StringBuilder fieldsString = new StringBuilder();
 
@@ -204,6 +228,13 @@ public class GameBoard {
         return null;
     }
 
+    /**
+     * Returns the UUID of a field that matches the given fieldName.
+     *
+     * @param fieldName A field type or name of the field (for example BreakField, JailField, StartField,
+     *                  jail, swimming_pool, bowling_alley, etc.)
+     * @return          The UUID of the field matching the criteria, if no field is found it returns null.
+     */
     public UUID getFieldIDFromType(String fieldName) {
         for (UUID uuid : fieldMap.keySet()) {
             try {

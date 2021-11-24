@@ -94,7 +94,7 @@ public class LanguageManager {
     }
 
     /**
-     * function that returns the messages
+     * Function that returns the messages
      *
      * @return all the messages in the locale
      */

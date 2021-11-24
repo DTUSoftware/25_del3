@@ -8,6 +8,9 @@ import dk.dtu.cdio3.objects.fields.PropertyField;
 
 import java.util.*;
 
+/**
+ * The GameManager controls the flow of the game, and has an instance of a game board as well as a dice cup.
+ */
 public class GameManager {
     private static GameManager gameManager;
     private static GameBoard gameBoard;
@@ -38,6 +41,11 @@ public class GameManager {
         return diceCup;
     }
 
+    /**
+     * Makes ready for a game with the given players.
+     *
+     * @param playerIDs The UUID's of the players that are going to be playing.
+     */
     public void setupGame(UUID[] playerIDs) {
         playerQueue = new ArrayDeque<>();
         playerQueue.addAll(Arrays.asList(playerIDs));
@@ -50,10 +58,16 @@ public class GameManager {
         gameFinished = false;
     }
 
+    /**
+     * Stops the game, in case someone reaches a losing condition.
+     */
     public void finishGame() {
         gameFinished = true;
     }
 
+    /**
+     * Starts the game.
+     */
     public void play() {
         UUID currentPlayer;
         // Loop until the game finishes
@@ -131,6 +145,11 @@ public class GameManager {
         }
     }
 
+    /**
+     * Performs a player's turn.
+     *
+     * @param playerID  The UUID of the player whose turn it is.
+     */
     private void playerPlay(UUID playerID) {
         GUIManager.getInstance().showMessage(LanguageManager.getInstance().getString("player_turn").replace("{player_name}", PlayerManager.getInstance().getPlayer(playerID).getName()));
 
@@ -166,14 +185,35 @@ public class GameManager {
         field.doLandingAction(playerID);
     }
 
+    /**
+     * Gets the current position of the player.
+     *
+     * @param playerID  The UUID of the player.
+     * @return          The position of the player (not on the board, but in amount of moves).
+     */
     public int getPlayerPosition(UUID playerID) {
         return playerPositions.get(playerID);
     }
 
+    /**
+     * Sets the player's position on the board.
+     *
+     * @param playerID          The UUID of the player to move.
+     * @param boardPosition     The desired board position.
+     * @param giveStartReward   Whether to give the player money when passing GO! (not wished during jailing).
+     */
     public void setPlayerBoardPosition(UUID playerID, int boardPosition, boolean giveStartReward) {
         setPlayerBoardPosition(playerID, boardPosition, giveStartReward, false);
     }
 
+    /**
+     * Sets the player's position on the board.
+     *
+     * @param playerID          The UUID of the player to move.
+     * @param boardPosition     The desired board position.
+     * @param giveStartReward   Whether to give the player money when passing GO! (not wished during jailing).
+     * @param buyForFree        Whether to provide the player with the deed for free, if the field is vacant.
+     */
     public void setPlayerBoardPosition(UUID playerID, int boardPosition, boolean giveStartReward, boolean buyForFree) {
         int oldPlayerPosition = playerPositions.get(playerID);
         int currentBoardPosition = oldPlayerPosition % gameBoard.getFieldAmount();
@@ -194,6 +234,14 @@ public class GameManager {
         }
     }
 
+    /**
+     * Sets the player's position, and executes the action of the field when the player is moved to it.
+     * This is NOT the board position, but the amount of moves taken position.
+     *
+     * @param playerID          The UUID of the player to move.
+     * @param playerPosition    The desired position.
+     * @param buyForFree        Whether to provide the player with the deed for free, if the field is vacant.
+     */
     public void setPlayerPosition(UUID playerID, int playerPosition, boolean buyForFree) {
         playerPositions.put(playerID, playerPosition);
         if (GUIManager.getInstance().guiInitialized()) {

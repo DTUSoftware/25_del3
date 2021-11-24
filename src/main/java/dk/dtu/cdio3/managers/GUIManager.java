@@ -114,8 +114,8 @@ public class GUIManager {
     }
 
     /**
-     * method that asks how many players you want and add that to players
-     * @return returns the ammount of players as and integer
+     * Method that asks how many players you want and add that to players
+     * @return returns the amount of players as and integer
      */
     public int askPlayers() {
         String[] playerammountlist = {"2", "3", "4"};

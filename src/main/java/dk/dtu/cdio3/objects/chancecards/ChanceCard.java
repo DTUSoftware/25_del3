@@ -32,7 +32,7 @@ public abstract class ChanceCard {
     /**
      * Abstract method for performing the said action of a chance card.
      *
-     * @param playerID  The ID of the Player that got the card.
+     * @param playerID  The UUID of the Player that drew the card.
      */
     public abstract void doCardAction(UUID playerID);
 }

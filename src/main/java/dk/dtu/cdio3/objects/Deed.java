@@ -6,6 +6,10 @@ import dk.dtu.cdio3.managers.PlayerManager;
 
 import java.util.UUID;
 
+/**
+ * A deed for a field.
+ * Keeps track of the price and the rent.
+ */
 public class Deed {
     private final UUID deedID;
     private double price = 0.0;
