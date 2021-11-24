@@ -65,4 +65,9 @@ public class Deed {
     public boolean payRent(UUID playerID) {
         return PlayerManager.getInstance().getPlayer(playerID).withdraw(getCurrentRent());
     }
+
+    @Override
+    public String toString() {
+        return "Price: " + getPrice() + ", Rent: " + getRent() + ", GroupRent: " + getGroupRent();
+    }
 }
