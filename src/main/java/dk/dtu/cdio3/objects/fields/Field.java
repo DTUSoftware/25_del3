@@ -1,6 +1,7 @@
 package dk.dtu.cdio3.objects.fields;
 
 import dk.dtu.cdio3.Game;
+import dk.dtu.cdio3.managers.GameManager;
 import dk.dtu.cdio3.managers.LanguageManager;
 import gui_fields.GUI_Chance;
 import gui_fields.GUI_Field;
@@ -67,5 +68,14 @@ public abstract class Field {
 
     public String getFieldName() {
         return fieldName;
+    }
+
+    @Override
+    public String toString() {
+        return "["+getID()+"] - " +
+                "(" + String.format("%02d", GameManager.getInstance().getGameBoard().getFieldPosition(getID())) + ") " +
+                getFieldName() +
+                " [" + "Color: " + getFieldColor().toString().replace("java.awt.Color", "") +
+                "]";
     }
 }

@@ -104,4 +104,15 @@ public class PropertyField extends Field {
     public void setPropertyOwner(UUID playerID) {
         ((GUI_Ownable) super.getGUIField()).setOwnerName(PlayerManager.getInstance().getPlayer(playerID).getName());
     }
+
+    @Override
+    public String toString() {
+        Deed fieldDeed = DeedManager.getInstance().getDeed(DeedManager.getInstance().getDeedID(getID()));
+        return "["+getID()+"] - " +
+                "(" + String.format("%02d", GameManager.getInstance().getGameBoard().getFieldPosition(getID())) + ") " +
+                getFieldName() +
+                " [" + "Color: " + getFieldColor().toString().replace("java.awt.Color", "") +
+                ", " + fieldDeed.toString() +
+                "]";
+    }
 }

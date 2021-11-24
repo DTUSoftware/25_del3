@@ -15,6 +15,8 @@ public class Game {
     public final static boolean debug = ((System.getenv("debug") != null) || (System.getProperty("debug") != null));
 
     public static void main(String[] args) {
+        Game.logDebug("Fields array: " + GameManager.getInstance().getGameBoard().fieldsToString());
+
         // Assign GUI to variable, since we will be using it again
         GUIManager gm = GUIManager.getInstance();
 
@@ -58,5 +60,9 @@ public class Game {
 
     public static double getStartBalance() {
         return startingBalance;
+    }
+
+    public static void logDebug(String message) {
+        System.out.println("[DEBUG] " + message);
     }
 }

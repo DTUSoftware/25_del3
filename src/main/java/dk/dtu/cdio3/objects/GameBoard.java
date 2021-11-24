@@ -145,6 +145,16 @@ public class GameBoard {
         return fields[fieldPosition];
     }
 
+    public String fieldsToString() {
+        StringBuilder fieldsString = new StringBuilder();
+
+        for (Field field : fields) {
+            fieldsString.append("\n    ").append(field.toString());
+        }
+
+        return fieldsString.toString();
+    }
+
     public Field getFieldFromID(UUID fieldID) {
         return fieldMap.get(fieldID);
     }
